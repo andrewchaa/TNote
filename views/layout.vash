@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <title>Pen - What You See Is What You Get (WYSIWYG)</title>
+  <link rel="stylesheet" href="/page.css" />
+  <link rel="stylesheet" href="/pen.css" />
+</head>
+<body>
+
+<div id="toolbar">
+  <span id="mode" class="icon-mode"></span>
+  <span id="hinted" class="icon-pre disabled" title="Toggle Markdown Hints"></span>
+</div>
+
+@html.block("")
+
+<div data-toggle="pen" data-placeholder="im a placeholder">
+  <h2>Enjoy live editing (+markdown)</h2>
+
+  <p><b><i>Click to edit, Select to apply effect, click items of toolbar to toggle effects.</i></b></p>
+  <hr>
+  <p>Horizontal-Rule can be inserted by click「...」on the toolbar or just type「... 」/「--- 」/「*** 」at line start. Note that
+    there's a SPACE at the end of a command.</p>
+  <hr>
+  <p>To link or unlink, please press the <i>ENTER</i> key after you filled the input field with your a link. A <a
+    href="/sofish">link</a> can be unlink by applying an empty value to the input field.
+
+  <p>
+  <ul>
+    <li>Ordered list and unordered list are supported.</li>
+    <li>Use the toolbar or use markdown syntax like「<b>1. </b>」,「<b>- </b>」or「<b>* </b>」</li>
+  </ul>
+  <blockquote>You can quote text by type「<b>&gt;</b>」at line start.</blockquote>
+  <p>What about add underline to text? "<u>Stay Hungry, Stay Foolish - <i>Steve Jobs</i></u>".</p>
+  <pre>A code block is also supported by type 「```」 at line start and press SPACE.</pre>
+  </p>
+</div>
+
+<script src="/pen.js"></script>
+<script src="/markdown.js"></script>
+<script type="text/javascript">
+
+  // config
+  var options = {
+    editor: document.querySelector('[data-toggle="pen"]'),
+    debug: true
+  };
+
+  // create editor
+  var pen = window.pen = new Pen(options);
+
+  // setTimeout(function () {
+    pen.focus();
+  // }, 100);
+
+
+  // toggle editor mode
+  document.querySelector('#mode').addEventListener('click', function() {
+    var text = this.textContent;
+
+    if(this.classList.contains('disabled')) {
+      this.classList.remove('disabled');
+      pen.rebuild();
+    } else {
+      this.classList.add('disabled');
+      pen.destroy();
+    }
+  });
+
+  // toggle editor mode
+  document.querySelector('#hinted').addEventListener('click', function() {
+    var pen = document.querySelector('.pen')
+
+    if(pen.classList.contains('hinted')) {
+      pen.classList.remove('hinted');
+      this.classList.add('disabled');
+    } else {
+      pen.classList.add('hinted');
+      this.classList.remove('disabled');
+    }
+  });
+</script>
+</body>
+</html>

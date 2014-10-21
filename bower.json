@@ -1,0 +1,27 @@
+{
+  "name": "TNote",
+  "version": "0.0.0",
+  "authors": [
+    "andrew.chaa <andrew.chaa@huddle.com>"
+  ],
+  "moduleType": [
+    "amd",
+    "es6",
+    "globals",
+    "node"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "knockout": "~3.2.0"
+  }
+}
