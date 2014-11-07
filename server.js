@@ -2,9 +2,6 @@ var util = require('util');
 var restify = require('restify');
 var bunyan = require('bunyan');
 
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/note');
-
 function MissingNoteError() {
 	restify.RestError.call(this, {
 		statusCode: 409,
@@ -19,7 +16,6 @@ util.inherits(MissingNoteError, restify.RestError);
 
 function createNote(req, res, next) {
 	if (!req.params.note) {
-		req.log.warn({params: p}, 'createNote: missing note');
 		next(new MissingNoteError());
 		return;
 	}
@@ -27,10 +23,14 @@ function createNote(req, res, next) {
 	console.log('title: ' + req.params.title);
 	console.log('note: ' + req.params.note);
 
+    console.log('opening ...');
+	var mongoose = require('mongoose');
+	mongoose.connect('mongodb://localhost/note');
+
 	var db = mongoose.connection;
 	db.on('error', console.error.bind(console, 'connection error:'));
 	db.once('open', function() {
-
+        console.log('opened');
 		var noteSchema = mongoose.Schema({
 			title: String,
 			note: String
@@ -43,13 +43,12 @@ function createNote(req, res, next) {
 		noteToSave.save(function (err, newNote) {
 			if (err) 
 				return console.log('An error happened while saving: ' + err);
+
+			res.send(201, noteToSave);
+			next();
 		})
 
 	});
-
-
-	res.send(201, noteToSave);
-	next();
 }
 
 var server = restify.createServer({
