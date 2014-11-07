@@ -73,6 +73,11 @@ server.use(restify.queryParser());
 server.use(restify.gzipResponse());
 server.use(restify.bodyParser());
 
+server.get(/\//, restify.serveStatic({
+	directory: './public',
+	default: 'index.html'
+}));
+
 server.post('/note', createNote);
 
 server.listen('8080', function () {
