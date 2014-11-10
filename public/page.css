@@ -3,6 +3,7 @@
   body{width:800px;margin:0 auto;padding:5% 20px 20px;font-family:Palatino, Optima, Georgia, serif;}
   @media all and (max-width:1024px){ body, pre a{width:60%;} }
   small{color:#999;}
+  
   #toolbar{margin-bottom:1em;position:fixed;left:20px;margin-top:5px;}
   #toolbar [class^="icon-"]:before, #toolbar [class*=" icon-"]:before{font-family:'pen'}
   #mode{color:#1abf89;;cursor:pointer;}
@@ -11,6 +12,7 @@
   #hinted{color:#1abf89;cursor:pointer;}
   #hinted.disabled{color:#666;}
   #hinted:before{content: '\e816';}
+  #save {color: #1abf89; cursor: pointer;}
 
   #fork{position:fixed;right:0;top:0;}
 
