@@ -60,11 +60,11 @@ server.pre(restify.pre.pause()); //don't drop data on uploads
 server.pre(restify.pre.sanitizePath());
 server.pre(restify.pre.userAgentConnection());
 server.use(restify.requestLogger()); //bunyan logger
-server.use(restify.throttle({
-	burst: 10,
-	rate: 5,
-	ip: true
-}))
+// server.use(restify.throttle({
+// 	burst: 10,
+// 	rate: 5,
+// 	ip: true
+// }))
 
 server.use(restify.acceptParser(server.acceptable));
 server.use(restify.dateParser());
