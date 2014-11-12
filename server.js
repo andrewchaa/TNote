@@ -1,6 +1,7 @@
 var util = require('util');
 var restify = require('restify');
 var bunyan = require('bunyan');
+var MongoClient = require('mongodb').mongodb;
 
 function MissingNoteError() {
 	restify.RestError.call(this, {
@@ -14,41 +15,40 @@ function MissingNoteError() {
 }
 util.inherits(MissingNoteError, restify.RestError);
 
+function insertNote(db, note, next) {
+	  console.log('inserting ' + note);
+
+  	var collection = db.collection('notes');
+  	colletion.insert([note], function (err, result) {
+  		if (err)
+  			console.log(err);
+
+			// console.log(result);
+			next();
+  	});
+}
+
 function createNote(req, res, next) {
 	if (!req.params.note) {
 		next(new MissingNoteError());
 		return;
 	}
 
-	console.log('title: ' + req.params.title);
-	console.log('note: ' + req.params.note);
+  console.log('opening ...');
+  MongoClient.connect('mongodb://localhost/note', function (err, db) {
+  	if (err)
+  		console.log(err);
 
-    console.log('opening ...');
-	var mongoose = require('mongoose');
-	mongoose.connect('mongodb://localhost/note');
-
-	var db = mongoose.connection;
-	db.on('error', console.error.bind(console, 'connection error:'));
-	db.once('open', function() {
-        console.log('opened');
-		var noteSchema = mongoose.Schema({
-			title: String,
-			note: String
-		});
-
-		var Note = mongoose.model('Note', noteSchema);
-		var noteToSave = new Note({ title: req.params.title, note: req.params.note });
-		console.log('Note is ' + noteToSave);
-
-		noteToSave.save(function (err, newNote) {
-			if (err) 
-				return console.log('An error happened while saving: ' + err);
-
+		var noteToSave = { title: req.params.title, note: req.params.note };
+		insertNote(db, noteToSave, function() {
+	  	db.close();
 			res.send(201, noteToSave);
 			next();
 		})
 
-	});
+
+  })
+
 }
 
 var server = restify.createServer({

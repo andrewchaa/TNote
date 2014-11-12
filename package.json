@@ -20,7 +20,8 @@
     "bunyan": "^1.2.1",
     "grunt": "^0.4.5",
     "grunt-nodemon": "^0.3.0",
-    "grunt-cli": "^0.1.13"
+    "grunt-cli": "^0.1.13",
+    "mongodb": "^1.4.19"
   },
   "devDependencies": {
     "nodeunit": "^0.9.0"
