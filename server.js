@@ -43,9 +43,9 @@ function createNote(req, res, next) {
     console.log('Connected to the server');
 
     var noteToSave = { title: req.params.title, note: req.params.note };
-    insertNote(db, noteToSave, function() {
+    insertNote(db, noteToSave, function(result) {
+      res.send(201, result[0]._id);
       db.close();
-      res.send(201, noteToSave);
       next();
     })
 

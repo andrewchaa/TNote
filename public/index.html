@@ -17,8 +17,8 @@
     <span id="save" ng-click="clickMe($event)" class="fa fa-floppy-o" title="Save"></span>
   </div>
   
-  <div ng-bind-html="contentHtml" data-toggle="pen" data-placeholder="im a placeholder">
-  </div>
+  <input type="hidden" value="{{noteId}}" />
+  <div ng-bind-html="contentHtml" data-toggle="pen" data-placeholder="start your note here" />
 
   <script src="/js/controller.js"></script>
   <script src="/pen.js"></script>
