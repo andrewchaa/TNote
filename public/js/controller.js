@@ -6,7 +6,6 @@ noteApp.controller('noteCtrl', ['$scope', '$http', '$sce', function noteCtrl($sc
     });
 
     $scope.clickMe = function(e) {
-        console.log(e);
         $http.post('note', { title: 'the first note', note: $scope.contentHtml }).
             success(function (data, status, hearders, config) {
                 console.log(status);
