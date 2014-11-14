@@ -12,7 +12,7 @@
   "author": "Andrew Chaa",
   "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.4.3",
+    "body-parser": "^1.9.2",
     "bower": "^1.3.12",
     "bunyan": "^1.2.1",
     "express": "^4.9.8",

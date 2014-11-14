@@ -6,12 +6,10 @@ noteApp.controller('noteCtrl', ['$scope', '$http', '$sce', function noteCtrl($sc
     });
 
     $scope.clickMe = function(e) {
-        $http.post('note', { title: 'the first note', note: $scope.contentHtml }).
+        $http.post('/api/note', { title: 'the first note', note: $scope.contentHtml }).
             success(function (data, status, hearders, config) {
-                console.log('status: ' + status);
-                console.log('data: ' + data);
-                console.log('config: ' + config);
-                $scope.noteId = data;
+                console.log('noteId: ' + data.noteId);
+                $scope.noteId = data.noteId;
 
             }).
             error(function (data, status, headers, config) {

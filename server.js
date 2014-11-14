@@ -1,6 +1,9 @@
+var bodyParser = require('body-parser');
 var express = require('express');
 var app = express();
 
+var port = process.env.PORT || 8080
+var router = express.Router();
 
 function insertNote(db, note, next) {
   console.log('inserting ' + note);
@@ -15,16 +18,19 @@ function insertNote(db, note, next) {
   });
 }
 
+app.use(bodyParser.urlencoded({ extended: false}));
+app.use(bodyParser.json());
+app.use('/api', router);
 app.use('/', express.static('./public'));
-app.get('/', function (req, res) {
+
+router.get('/', function (req, res) {
 	res.redirect('/index.html');
 });
 
-app.post('/note', function (req, res) {
+router.post('/note', function (req, res) {
+	console.log(req.body.note);
 
-  if (!req.params['note']) {
-  	  console.log(req.params);
-  	  console.log(req);
+  if (!req.body.note) {
       res.status(400).send({ 'error' : 'note is expected'});
       return;
   }
@@ -40,7 +46,7 @@ app.post('/note', function (req, res) {
 
     var noteToSave = { title: req.params.title, note: req.params.note };
     insertNote(db, noteToSave, function(result) {
-      res.send(201, result[0]._id);
+      res.status(201).send({ 'noteId' : result[0]._id });
       db.close();
     })
 
@@ -49,5 +55,5 @@ app.post('/note', function (req, res) {
 
 });
 
-app.listen(8080);
+app.listen(port);
 
