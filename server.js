@@ -5,6 +5,11 @@ var app = express();
 var port = process.env.PORT || 8080
 var router = express.Router();
 
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/note');
+
+var Note = require('./server/models/note');
+
 function insertNote(db, note, next) {
   console.log('inserting ' + note);
 
@@ -23,37 +28,114 @@ app.use(bodyParser.json());
 app.use('/api', router);
 app.use('/', express.static('./public'));
 
+router.use(function (req, res, next) {
+	console.log('logging route...');
+	next();
+});
+
 router.get('/', function (req, res) {
 	res.redirect('/index.html');
 });
 
-router.post('/note', function (req, res) {
-	console.log(req.body.note);
+router.route('/notes')
+	.post(function (req, res) {
 
-  if (!req.body.note) {
-      res.status(400).send({ 'error' : 'note is expected'});
-      return;
-  }
+	  var note = new Note();
+	  note.title = req.body.title;
+	  note.note = req.body.note;
 
-  console.log('opening ...');
-  var MongoClient = require('mongodb').MongoClient;
-  MongoClient.connect('mongodb://localhost:27017/note', function (err, db) {
+	  note.save(function (err) {
+	  	if (err)
+	  		res.status(400).send(err);
 
-  if (err)
-      console.log(err);
+	  	var host = req.protocol + '://' + req.get('host');
+	  	res.status(201).json({ 
+	  		note : { 
+	  			message : 'Note created',
+	  			links : [
+	  				{ link : host + '/api/notes/' + note.id, rel : 'self' },
+	  				{ link : host + '/api/notes/' + note.id, rel : 'update' },
+	  				{ link : host + '/api/notes/' + note.id, rel : 'delete' },
+	  				{ link : host + '/api/notes/', rel : 'list' }
+	  			]
+	  		}
+	  	});
+	  });
 
-    console.log('Connected to the server');
+	})
 
-    var noteToSave = { title: req.params.title, note: req.params.note };
-    insertNote(db, noteToSave, function(result) {
-      res.status(201).send({ 'noteId' : result[0]._id });
-      db.close();
-    })
+	.get(function (req, res) {
+		Note.find(function (err, notes) {
+			if (err) 
+				res.status(400).send(err);
 
+	  	var host = req.protocol + '://' + req.get('host');
+			res.status(200).json(notes);
+		});
+	});
 
-  })
+router.route('/notes/:note_id')
+	.get(function (req, res) {
 
-});
+		Note.findById(req.params.note_id, function (err, note) {
+			if (err)
+				res.status(404).send(err);
+
+			res.status(200).json(note);
+		});
+	})
+
+	.put(function (req, res) {
+		Note.findById(req.params.note_id, function (err, note) {
+			if (err)
+				res.status(404).send(err);
+
+			note.title = req.body.title;
+			note.note = req.body.note;
+			note.save(function (err) {
+				if (err)
+					res.status(400).send(err);
+
+		  	var host = req.protocol + '://' + req.get('host');
+		  	res.status(200).json({ 
+		  		note : { 
+		  			message : 'Note updated',
+		  			links : [
+		  				{ link : host + '/api/notes/' + note.id, rel : 'self' },
+		  				{ link : host + '/api/notes/' + note.id, rel : 'read' },
+		  				{ link : host + '/api/notes/' + note.id, rel : 'delete' },
+		  				{ link : host + '/api/notes/', rel : 'list' }
+		  			]
+		  		}
+		  	});
+
+			})
+		});
+	})
+
+	.delete(function (req, res) {
+		var note_id = req.params.note_id;
+
+		Note.remove({ id : note_id }, function (err, note) {
+			if (err)
+				res.status(400).send(err);
+
+	  	var host = req.protocol + '://' + req.get('host');
+			res.status(200).json({
+				 note : {
+					message : 'The note (' + note_id + ') is successfully deleted',
+					links: [
+		  				{ link : host + '/api/notes/' + note_id, rel : 'self' },
+		  				{ link : host + '/api/notes/' + note_id, rel : 'read' },
+		  				{ link : host + '/api/notes/' + note_id, rel : 'update' },
+		  				{ link : host + '/api/notes/', rel : 'list' }
+					]
+				}
+			});
+		});
+	})
+	;
+
 
 app.listen(port);
 

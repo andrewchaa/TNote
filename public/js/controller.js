@@ -6,7 +6,7 @@ noteApp.controller('noteCtrl', ['$scope', '$http', '$sce', function noteCtrl($sc
     });
 
     $scope.clickMe = function(e) {
-        $http.post('/api/note', { title: 'the first note', note: $scope.contentHtml }).
+        $http.post('/api/notes', { title: 'the first note', note: $scope.contentHtml }).
             success(function (data, status, hearders, config) {
                 console.log('noteId: ' + data.noteId);
                 $scope.noteId = data.noteId;
