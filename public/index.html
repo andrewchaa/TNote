@@ -2,30 +2,47 @@
 <html lang="en" ng-app="noteApp">
 <head>
   <meta charset="UTF-8">
-  <title>Pen - What You See Is What You Get (WYSIWYG)</title>
+  <title>Tech note</title>
   <link rel="stylesheet" href="/css/font-awesome.css" />
-  <link rel="stylesheet" href="/page.css" />
-  <!-- <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.min.css" /> -->
+  <!-- <link rel="stylesheet" href="/page.css" /> -->
+  <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="/pen.css" />
-  <script src="/vendor/angular/angular.js"></script>
-  <script src="/vendor/angular-sanitize/angular-sanitize.js"></script>
 </head>
 <body ng-controller="noteCtrl">
 
-  <div id="toolbar">
-    <span id="mode" class="icon-mode"></span>
-    <span id="hinted" class="icon-pre disabled" title="Toggle Markdown Hints"></span>
-    <span id="save" ng-click="clickMe($event)" class="fa fa-floppy-o" title="Save"></span>
-  </div>
-  
-  <div data-toggle="pen" data-placeholder="title" />
-  
-  <div ng-bind-html="contentHtml" data-toggle="pen" data-placeholder="start your note here" />
+<br />
+<div class="container">
 
-  <script src="/js/controller.js"></script>
-  <script src="/pen.js"></script>
+  <div class="row">
+
+    <div class="col-md-1">
+      <div id="toolbar">
+        <span id="mode" class="icon-mode"></span>
+        <span id="hinted" class="icon-pre disabled" title="Toggle Markdown Hints"></span>
+      </div>
+    </div>
+
+    <div class="col-md-11">
+
+      <button type="button" ng-click="save($event)" class="btn btn-primary">Save</button>
+      <button type="button" ng-click="toggleReadOnly($event)" class="btn {{ toggleReadOnlyClass }}">Read only</button>
+      <button type="button" ng-click="toggleMarkdown($event)" class="btn {{ toggleMarkdownClass }}">Mark down</button>
+
+      <div ng-bind-html="contentHtml" data-toggle="pen" data-placeholder="start your note here" />
+    </div>
+
+  </div>
+
+</div>
+
+  <script src="/vendor/angular/angular.js"></script>
+  <script src="/vendor/angular-sanitize/angular-sanitize.js"></script>
   <script src="/markdown.js"></script>
-  <script src="/layout.js"></script>
+  <script src="/pen.js"></script>
+  <script src="/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="/js/controller.js"></script>
+
 
 </body>
 </html>
