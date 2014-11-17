@@ -5,6 +5,7 @@
   <title>Pen - What You See Is What You Get (WYSIWYG)</title>
   <link rel="stylesheet" href="/css/font-awesome.css" />
   <link rel="stylesheet" href="/page.css" />
+  <!-- <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.min.css" /> -->
   <link rel="stylesheet" href="/pen.css" />
   <script src="/vendor/angular/angular.js"></script>
   <script src="/vendor/angular-sanitize/angular-sanitize.js"></script>
@@ -17,10 +18,8 @@
     <span id="save" ng-click="clickMe($event)" class="fa fa-floppy-o" title="Save"></span>
   </div>
   
-  <input type="hidden" value="{{noteId}}" />
-  <div >
-    <input id="title" type="text" />
-  </div>
+  <div data-toggle="pen" data-placeholder="title" />
+  
   <div ng-bind-html="contentHtml" data-toggle="pen" data-placeholder="start your note here" />
 
   <script src="/js/controller.js"></script>
