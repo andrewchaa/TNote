@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="noteApp">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Tech note</title>
@@ -8,13 +8,12 @@
   <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="/pen.css" />
 </head>
-<body ng-controller="noteCtrl">
+<body>
 
 <br />
 <div class="container">
 
   <div class="row">
-
     <div class="col-md-1">
       <div id="toolbar">
         <span id="mode" class="icon-mode"></span>
@@ -23,25 +22,37 @@
     </div>
 
     <div class="col-md-11">
-
-      <button type="button" ng-click="save($event)" class="btn btn-primary">Save</button>
-      <button type="button" ng-click="toggleReadOnly($event)" class="btn {{ toggleReadOnlyClass }}">Read only</button>
-      <button type="button" ng-click="toggleMarkdown($event)" class="btn {{ toggleMarkdownClass }}">Mark down</button>
-
-      <div ng-bind-html="contentHtml" data-toggle="pen" data-placeholder="start your note here" />
+      <button data-bind="click: save" type="button" class="btn btn-primary">Save</button>
+      <button type="button" class="btn btn-default">Read only</button>
+      <button type="button" class="btn btn-default">Mark down</button>            
     </div>
-
   </div>
+  <div class="row">
+    <div class="col-md-11 col-md-offset-1">
+      <br />
+      <div data-bind="editableHtml: contentHtml" data-toggle="pen" data-placeholder="start your note here"></div>
+    </div>
+  </dv>
+  
+  <div class="row">
+    <div class="col-md-11 col-md-offset-1">
+      <div class="dropdown well">
+        Debug:
+        <p data-bind="text: ko.toJSON($data)"></p>
+      </div>
+    </div>
+  </div>
+
 
 </div>
 
-  <script src="/vendor/angular/angular.js"></script>
-  <script src="/vendor/angular-sanitize/angular-sanitize.js"></script>
   <script src="/markdown.js"></script>
   <script src="/pen.js"></script>
   <script src="/vendor/jquery/dist/jquery.min.js"></script>
   <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="/js/controller.js"></script>
+  <script src="/vendor/knockout/dist/knockout.js"></script>
+  <script src="/js/knockout.ext.js"></script>
+  <script src="/js/page.js"></script>
 
 
 </body>
