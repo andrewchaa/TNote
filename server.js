@@ -137,5 +137,7 @@ router.route('/notes/:note_id')
 	;
 
 
-app.listen(port);
+app.listen(port, function() {
+	console.log('listening to port: %d', port);
+});
 
