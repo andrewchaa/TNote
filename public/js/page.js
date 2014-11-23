@@ -6,7 +6,7 @@ $(function() {
 	};
 
 	var pen = new Pen(options);
-	pen.focus();
+	// pen.focus();
 
 	// $scope.toggleReadOnlyClass = 'btn-default';
 	// $scope.toggleMarkdownClass = 'btn-default';
@@ -14,13 +14,14 @@ $(function() {
 	// $scope.showMarkdown = false;
 
 	var viewModel = {
+		title: ko.observable(''),
 		contentHtml: ko.observable('')
 	}
 
 	viewModel.save = function (contentElement) {
 		console.log(viewModel.contentHtml());
 		$.post('/api/notes', {
-			title: 'the first note', 
+			title: viewModel.title, 
 			note: viewModel.contentHtml 
 		}).done(function (data) {
 			console.log(data);
