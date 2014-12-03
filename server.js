@@ -50,13 +50,15 @@ router.route('/notes')
 
 	  	var host = req.protocol + '://' + req.get('host');
 	  	res.status(201).json({ 
-  			message : 'Note created',
-  			links : [
-  				{ link : host + '/api/notes/' + note.id, rel : 'self' },
-  				{ link : host + '/api/notes/' + note.id, rel : 'update' },
-  				{ link : host + '/api/notes/' + note.id, rel : 'delete' },
-  				{ link : host + '/api/notes/', rel : 'list' }
-  			]
+	  		note : { 
+	  			message : 'Note created',
+	  			links : [
+	  				{ link : host + '/api/notes/' + note.id, rel : 'self' },
+	  				{ link : host + '/api/notes/' + note.id, rel : 'update' },
+	  				{ link : host + '/api/notes/' + note.id, rel : 'delete' },
+	  				{ link : host + '/api/notes/', rel : 'list' }
+	  			]
+	  		}
 	  	});
 	  });
 
@@ -135,7 +137,5 @@ router.route('/notes/:note_id')
 	;
 
 
-app.listen(port, function() {
-	console.log('listening to port: %d', port);
-});
+app.listen(port);
 

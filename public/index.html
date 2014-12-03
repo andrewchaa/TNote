@@ -1,76 +1,47 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="noteApp">
 <head>
   <meta charset="UTF-8">
   <title>Tech note</title>
   <link rel="stylesheet" href="/css/font-awesome.css" />
+  <!-- <link rel="stylesheet" href="/page.css" /> -->
   <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="/pen.css" />
 </head>
-<body>
+<body ng-controller="noteCtrl">
 
 <br />
 <div class="container">
-  
-  <div data-bind="template: { name: 'note-template' }"></div>
-  <div data-bind="template: { name: 'debug-template' }"></div>
+
+  <div class="row">
+
+    <div class="col-md-1">
+      <div id="toolbar">
+        <span id="mode" class="icon-mode"></span>
+        <span id="hinted" class="icon-pre disabled" title="Toggle Markdown Hints"></span>
+      </div>
+    </div>
+
+    <div class="col-md-11">
+
+      <button type="button" ng-click="save($event)" class="btn btn-primary">Save</button>
+      <button type="button" ng-click="toggleReadOnly($event)" class="btn {{ toggleReadOnlyClass }}">Read only</button>
+      <button type="button" ng-click="toggleMarkdown($event)" class="btn {{ toggleMarkdownClass }}">Mark down</button>
+
+      <div ng-bind-html="contentHtml" data-toggle="pen" data-placeholder="start your note here" />
+    </div>
+
+  </div>
 
 </div>
 
+  <script src="/vendor/angular/angular.js"></script>
+  <script src="/vendor/angular-sanitize/angular-sanitize.js"></script>
   <script src="/markdown.js"></script>
   <script src="/pen.js"></script>
   <script src="/vendor/jquery/dist/jquery.min.js"></script>
   <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="/vendor/knockout/dist/knockout.js"></script>
-  <script src="/js/knockout.ext.js"></script>
-  <script src="/vendor/base/base.js"></script>
-  <script src="/js/models/note.js"></script>
-
-  <script type="text/html" id="note-template">
-    <div class="row">
-      <br />
-      <div class="col-md-4">
-        <ul class="list-group" data-bind="foreach: notes">
-        <li class="list-group-item" data-bind="text: title, click: $parent.editNote"></li>
-        </ul>
-      </div>
-      <div class="col-md-8" data-bind="with: selectedNote">
-        <div class="row">
-          <button type="button" data-bind="click: add" class="btn btn-primary">Add New</button>
-          <button type="button" data-bind="click: update, css: saveBtnStatus">Save change</button>
-          <button type="button" class="btn btn-default">Mark down</button>            
-        </div>
-        <br />
-        <div class="row">
-          <form>
-            <div class="form-group">
-              <input data-bind="value: title" type="text" class="form-control" placeholder="title">
-            </div>
-            <div class="form-group">
-              <div class="panel panel-default">
-                <div class="panel-body">
-                  <div data-bind="editableHtml: content" data-toggle="pen" data-placeholder="start your note here"></div>
-                </div>
-              </div>
-            </div>
-          </form>        
-        </div>
-      </div>
-    </dv>
-  </script>
-
-  <script type="text/html" id="debug-template">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="dropdown well">
-          Debug:
-          <pre data-bind="text: ko.toJSON($data)"></pre>
-        </div>
-      </div>
-    </div>
-  </script>
-
-  <script src="/js/page.js"></script>
+  <script src="/js/controller.js"></script>
 
 
 </body>
