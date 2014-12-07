@@ -1,9 +1,6 @@
-var noteApp = angular.module('noteApp', ['ngSanitize']);
+var noteApp = angular.module('noteApp', []);
 
 noteApp.controller('noteCtrl', ['$scope', '$http', '$sce', function noteCtrl($scope, $http, $sce) {
-  $http.get('/js/data.html').success(function(data) {
-      $scope.contentHtml = data;
-  });
 
   $scope.init = function () {
     var options = {
