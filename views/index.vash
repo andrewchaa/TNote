@@ -1,14 +1,3 @@
 @html.extend('layout', function (model) {
-  @html.block('currentNote', function (model) {
-
-    <button type="button" ng-click="save($event)" class="btn btn-primary">Save</button>
-    
-    <div class="panel panel-default" style="margin-top:10px;">
-      <div ng-bind-html="contentHtml" data-toggle="pen" data-placeholder="start your note here" 
-       style="width: 100%; height: 500px;" class="panel-body" ></div>
-    </div>
-
-  })  
-
-
+  
 })

@@ -9,31 +9,23 @@
   </head>
 
   <body ng-controller="noteCtrl">
-
     <div class="container">
-
       <div class="row">
         <br />
-
-        <div class="col-md-4">
+        <div class="col-md-8 col-md-offset-4">
+          <button type="button" ng-click="save($event)" class="btn btn-primary">Save</button>
+          <div>&nbsp;</div>
         </div>
+      </div>
+      <div class="row">
 
-        <div class="col-md-8">
+        <div class="col-md-4">@html.include('list')</div>
+        <div class="col-md-8">@html.include('note')</div>
 
-          @html.block('currentNote')
-
-        </div>
       </div>
     </div>
 
-    <script src="/vendor/angular/angular.js"></script>
-    <script src="/vendor/angular-route/angular-route.min.js"></script>
-
-    <script src="/markdown.js"></script>
-    <script src="/pen.js"></script>
-    <script src="/vendor/jquery/dist/jquery.min.js"></script>
-    <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="/js/controller.js"></script>
+    @html.include('scripts')
 
 
   </body>
