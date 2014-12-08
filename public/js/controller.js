@@ -2,6 +2,8 @@ var noteApp = angular.module('noteApp', []);
 
 noteApp.controller('noteCtrl', ['$scope', '$http', '$sce', function noteCtrl($scope, $http, $sce) {
 
+  $scope.title = '';
+
   $scope.init = function () {
     var options = {
       editor: document.querySelector('[data-toggle="pen"]'),
@@ -19,13 +21,12 @@ noteApp.controller('noteCtrl', ['$scope', '$http', '$sce', function noteCtrl($sc
     $http.get('/api/notes')
       .success(function (data, status, headers, config) {
         $scope.notes = data;
-        console.log('success');
       })
 
   }
 
   $scope.save = function(e) {
-    $http.post('/api/notes', { title: 'the first note', note: $scope.contentHtml })
+    $http.post('/api/notes', { title: $scope.title, note: $scope.contentHtml })
       .success(function (data, status, headers, config) {})
       .error(function (data, status, headers, config) {});
   }
