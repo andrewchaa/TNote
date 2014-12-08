@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en" ng-app="noteApp">
+  <head>
+    <meta charset="UTF-8">
+    <title>Tech note</title>
+    <link rel="stylesheet" href="/css/font-awesome.css" />
+    <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/pen.css" />
+  </head>
+
+  <body ng-controller="noteCtrl">
+
+    <div class="container">
+
+      <div class="row">
+        <br />
+
+        <div class="col-md-4">
+        </div>
+
+        <div class="col-md-8">
+
+          @html.block('currentNote')
+
+        </div>
+      </div>
+    </div>
+
+    <script src="/vendor/angular/angular.js"></script>
+    <script src="/vendor/angular-route/angular-route.min.js"></script>
+
+    <script src="/markdown.js"></script>
+    <script src="/pen.js"></script>
+    <script src="/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/js/controller.js"></script>
+
+
+  </body>
+</html>
