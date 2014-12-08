@@ -16,11 +16,17 @@ noteApp.controller('noteCtrl', ['$scope', '$http', '$sce', function noteCtrl($sc
     $scope.isReadOnly = false;
     $scope.showMarkdown = false;
 
+    $http.get('/api/notes')
+      .success(function (data, status, headers, config) {
+        $scope.notes = data;
+        console.log('success');
+      })
+
   }
 
   $scope.save = function(e) {
     $http.post('/api/notes', { title: 'the first note', note: $scope.contentHtml })
-      .success(function (data, status, hearders, config) {})
+      .success(function (data, status, headers, config) {})
       .error(function (data, status, headers, config) {});
   }
 
