@@ -25,6 +25,10 @@ noteApp.controller('noteCtrl', ['$scope', '$http', '$sce', function noteCtrl($sc
 
   }
 
+  $scope.new = function () {
+    console.log('new');
+  }
+
   $scope.save = function(e) {
     $http.post('/api/notes', { title: $scope.title, note: $scope.contentHtml })
       .success(function (data, status, headers, config) {})
