@@ -1,36 +1,58 @@
-var noteApp = angular.module('noteApp', ['ngRoute'])
+noteApp = angular.module('noteApp', ['ngRoute'])
   .constant('VERSION', '0.1')
   .config([
     '$routeProvider',
     function($routeProvider) {
-      $routeProvider.when('/', {
-        controller: 'noteCtrl',
+      $routeProvider
+      .when('/', {
+        controller: 'homeCtrl',
+        templateUrl: '../html/home.html'
+      })
+      .when('/:id', {
+        controller: 'editCtrl',
         templateUrl: '../html/home.html'
       });
     }
   ])
-  .controller('noteCtrl', ['$scope', '$http', function noteCtrl($scope, $http) {
+  .controller('homeCtrl', ['$scope', '$http', function noteCtrl($scope, $http) {
 
     $scope.title = '';
-
     $scope.init = function () {
-      var options = {
-        editor: document.querySelector('[data-toggle="pen"]'),
-        debug: false
-      };
-
-      $scope.pen = window.pen = new Pen(options);
-      $scope.pen.focus();
-
-      $scope.toggleReadOnlyClass = 'btn-default';
-      $scope.toggleMarkdownClass = 'btn-default';
-      $scope.isReadOnly = false;
-      $scope.showMarkdown = false;
 
       $http.get('/api/notes')
         .success(function (data, status, headers, config) {
           $scope.notes = data;
         })
+
+      CKEDITOR.on( 'instanceCreated', function( event ) {
+        var editor = event.editor,
+          element = editor.element;
+
+        // Customize editors for headers and tag list.
+        // These editors don't need features like smileys, templates, iframes etc.
+        if ( element.is( 'h1', 'h2', 'h3' ) || element.getAttribute( 'id' ) == 'taglist' ) {
+          // Customize the editor configurations on "configLoaded" event,
+          // which is fired after the configuration file loading and
+          // execution. This makes it possible to change the
+          // configurations before the editor initialization takes place.
+          editor.on( 'configLoaded', function() {
+
+            // Remove unnecessary plugins to make the editor simpler.
+            editor.config.removePlugins = 'colorbutton,find,flash,font,' +
+              'forms,iframe,image,newpage,removeformat,' +
+              'smiley,specialchar,stylescombo,templates';
+
+            // Rearrange the layout of the toolbar.
+            editor.config.toolbarGroups = [
+              { name: 'editing',    groups: [ 'basicstyles', 'links' ] },
+              { name: 'undo' },
+              { name: 'clipboard',  groups: [ 'selection', 'clipboard' ] },
+              { name: 'about' }
+            ];
+          });
+        }
+      });
+        
 
     }
 
@@ -44,39 +66,18 @@ var noteApp = angular.module('noteApp', ['ngRoute'])
         .error(function (data, status, headers, config) {});
     }
 
-    $scope.toggleReadOnly = function(e) {
-      $scope.isReadOnly = !$scope.isReadOnly;
-      $scope.toggleClass($scope.isReadOnly, 'toggleReadOnlyClass');
+    $scope.init();
 
-      if ($scope.isReadOnly) {
-        $scope.pen.destroy();
-      } else {
-        $scope.pen.rebuild();
-      }
-    }
-
-    $scope.toggleMarkdown = function(e) {
-      $scope.showMarkdown = !$scope.showMarkdown;
-      $scope.toggleClass($scope.showMarkdown, 'toggleMarkdownClass');
-
-      var pen = document.querySelector('.pen')
-      if ($scope.showMarkdown) {
-        pen.classList.add('hinted');
-      } else {
-        pen.classList.remove('hinted');
-      }
-    }
-
-    $scope.toggleClass = function(value, classModel) {
-
-      if (value) {
-        $scope[classModel] = 'btn-primary';
-      } else {
-        $scope[classModel] = 'btn-default'
-      }
+  }])
+  .controller('editCtrl', ['$scope', '$routeParams', '$http', function ($scope, $routeParams, $http) {
+    $scope.init = function () {
+      $http.get('/api/notes/' + $routeParams.id)
+        .success(function (data, status, headers, config) {
+          console.log(data.note);
+        })
     }
 
     $scope.init();
-
-  }]);
+  }])
+;
  

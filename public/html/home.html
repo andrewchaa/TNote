@@ -3,7 +3,7 @@
     <br />
     <div class="col-md-8 col-md-offset-4">
       <button type="button" ng-click="new()" class="btn btn-primary">New</button>
-      <button type="button" ng-click="save($event)" class="btn btn-default">Save</button>
+      <button type="button" ng-click="save()" class="btn btn-default">Save</button>
       <div>&nbsp;</div>
     </div>
   </div>
@@ -27,8 +27,7 @@
 
 				<div class="form-group">
 				<div class="panel panel-default">
-				  <div ng-bind-html="contentHtml" data-toggle="pen" data-placeholder="start your note here" 
-				   style="width: 100%; height: 500px;" class="panel-body" >
+				  <div ng-bind-html="content" contenteditable="true" style="width: 100%; height: 500px;" class="panel-body" >
 				  </div>
 				</div>
 				</div>
