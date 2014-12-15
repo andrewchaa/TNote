@@ -26,15 +26,14 @@
 
           var host = req.protocol + '://' + req.get('host');
           res.status(201).json({ 
-            note : { 
-              message : 'Note created',
-              links : [
-                { link : host + '/api/notes/' + note.id, rel : 'self' },
-                { link : host + '/api/notes/' + note.id, rel : 'update' },
-                { link : host + '/api/notes/' + note.id, rel : 'delete' },
-                { link : host + '/api/notes/', rel : 'list' }
-              ]
-            }
+            message : 'Note created',
+            id : note.id,
+            links : [
+              { uri : host + '/api/notes/' + note.id, rel : 'self' },
+              { uri : host + '/api/notes/' + note.id, rel : 'update' },
+              { uri : host + '/api/notes/' + note.id, rel : 'delete' },
+              { uri : host + '/api/notes/', rel : 'list' }
+            ]
           });
         });
 
@@ -45,7 +44,6 @@
           if (err) 
             res.status(400).send(err);
 
-          var host = req.protocol + '://' + req.get('host');
           res.status(200).json(notes);
         });
       });
@@ -57,7 +55,11 @@
           if (err)
             res.status(404).send(err);
 
-          res.status(200).json(note);
+          res.status(200).json({
+            id: note.id,
+            note: note.note,
+            title: note.title
+          });
         });
       })
 
@@ -77,10 +79,10 @@
               note : { 
                 message : 'Note updated',
                 links : [
-                  { link : host + '/api/notes/' + note.id, rel : 'self' },
-                  { link : host + '/api/notes/' + note.id, rel : 'read' },
-                  { link : host + '/api/notes/' + note.id, rel : 'delete' },
-                  { link : host + '/api/notes/', rel : 'list' }
+                  { uri : host + '/api/notes/' + note.id, rel : 'self' },
+                  { uri : host + '/api/notes/' + note.id, rel : 'read' },
+                  { uri : host + '/api/notes/' + note.id, rel : 'delete' },
+                  { uri : host + '/api/notes/', rel : 'list' }
                 ]
               }
             });
@@ -101,10 +103,10 @@
              note : {
               message : 'The note (' + note_id + ') is successfully deleted',
               links: [
-                  { link : host + '/api/notes/' + note_id, rel : 'self' },
-                  { link : host + '/api/notes/' + note_id, rel : 'read' },
-                  { link : host + '/api/notes/' + note_id, rel : 'update' },
-                  { link : host + '/api/notes/', rel : 'list' }
+                  { uri : host + '/api/notes/' + note_id, rel : 'self' },
+                  { uri : host + '/api/notes/' + note_id, rel : 'read' },
+                  { uri : host + '/api/notes/' + note_id, rel : 'update' },
+                  { uri : host + '/api/notes/', rel : 'list' }
               ]
             }
           });
