@@ -24,36 +24,26 @@ noteApp = angular.module('noteApp', ['ngRoute'])
           $scope.notes = data;
         })
 
-      CKEDITOR.on( 'instanceCreated', function( event ) {
-        var editor = event.editor,
-          element = editor.element;
 
-        // Customize editors for headers and tag list.
-        // These editors don't need features like smileys, templates, iframes etc.
-        if ( element.is( 'h1', 'h2', 'h3' ) || element.getAttribute( 'id' ) == 'taglist' ) {
-          // Customize the editor configurations on "configLoaded" event,
-          // which is fired after the configuration file loading and
-          // execution. This makes it possible to change the
-          // configurations before the editor initialization takes place.
-          editor.on( 'configLoaded', function() {
+      CKEDITOR.disableAutoInline = true;
 
-            // Remove unnecessary plugins to make the editor simpler.
-            editor.config.removePlugins = 'colorbutton,find,flash,font,' +
-              'forms,iframe,image,newpage,removeformat,' +
-              'smiley,specialchar,stylescombo,templates';
+      var config = {
+        extraPlugins: 'codesnippet',
+        toolbar: [
+          [ 'Source' ], [ 'Undo', 'Redo' ], [ 'Bold', 'Italic', 'Underline' ], [ 'CodeSnippet' ]
+        ],
+        codeSnippet_theme: 'default',
+        height: 400
+      };
 
-            // Rearrange the layout of the toolbar.
-            editor.config.toolbarGroups = [
-              { name: 'editing',    groups: [ 'basicstyles', 'links' ] },
-              { name: 'undo' },
-              { name: 'clipboard',  groups: [ 'selection', 'clipboard' ] },
-              { name: 'about' }
-            ];
-          });
-        }
-      });
-        
+      CKEDITOR.replace( 'content', config );
 
+      CKEDITOR.inline( 'editable', CKEDITOR.tools.extend( {}, config, {
+        extraPlugins: 'codesnippet'
+      }, true ) );
+
+      if ( CKEDITOR.env.ie && CKEDITOR.env.version == 8 )
+        CKEDITOR.document.getById( 'ie8-warning' ).addClass( 'warning' );
     }
 
     $scope.new = function () {
