@@ -18,7 +18,7 @@
 
         var note = new Note();
         note.title = req.body.title;
-        note.note = req.body.note;
+        note.content = req.body.content;
 
         note.save(function (err) {
           if (err)
@@ -57,7 +57,7 @@
 
           res.status(200).json({
             id: note.id,
-            note: note.note,
+            content: note.content,
             title: note.title
           });
         });
@@ -69,7 +69,7 @@
             res.status(404).send(err);
 
           note.title = req.body.title;
-          note.note = req.body.note;
+          note.content = req.body.content;
           note.save(function (err) {
             if (err)
               res.status(400).send(err);

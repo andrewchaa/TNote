@@ -50,11 +50,11 @@ noteApp = angular.module('noteApp', ['ngRoute'])
       listNotes($scope);
       bindEditor('content');
 
-      $scope.save = function(e) {
+      $scope.save = function() {
         var title = $scope.title;
         var content = CKEDITOR.instances.content.getData();
 
-        $http.post('/api/notes', { title: title, note: content })
+        $http.post('/api/notes', { title: title, content: content })
           .success(function (note, status, headers, config) {
             $location.path('/' + note.id);
           });
@@ -66,11 +66,27 @@ noteApp = angular.module('noteApp', ['ngRoute'])
   .controller('editCtrl', ['$scope', '$routeParams', '$http', '$location', 'listNotes', 'bindEditor',
     function ($scope, $routeParams, $http, $location, listNotes, bindEditor) {
 
+      listNotes($scope);
+      bindEditor('content');
+
       $http.get('/api/notes/' + $routeParams.id)
         .success(function (note, status, headers, config) {
           $scope.title = note.title;
-          CKEDITOR.instances.content.setData(note.note);
+          CKEDITOR.instances.content.setData(note.content);
       });
+
+      $scope.new = function() {
+        $location.path('/');
+      }
+
+      $scope.save = function() {
+        var content = CKEDITOR.instances.content.getData();
+        $http.put('/api/notes/' + $routeParams.id, { title: $scope.title, content: content })
+          .success(function (note) {
+            $scope.title = note.title;
+            CKEDITOR.instances.content.getData(note.content);
+          });
+      }
 
   }])
 ;

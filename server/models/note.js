@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var noteSchema = new Schema({
 	title: String,
-	note: String
+	content: String
 });
 
 module.exports = mongoose.model('Note', noteSchema);
