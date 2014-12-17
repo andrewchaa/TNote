@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="noteApp">
+<html lang="en" ng-app="noteApp" style="overflow: -moz-scrollbars-vertical; overflow-y: scroll;">
   <head>
     <meta charset="UTF-8">
     <title>Tech note</title>
