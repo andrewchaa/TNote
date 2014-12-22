@@ -37,7 +37,8 @@
     app.get('/auth/facebook/callback', 
       passport.authenticate('facebook', { failureRedirect: "/#/loginfailed" }),
       function (req, res) {
-        console.log('login success');
+        console.log('login success, user: ' + JSON.stringify(req.user));
+
         res.redirect('/#');
     });
 
