@@ -7,10 +7,12 @@
         FacebookStrategy = require('passport-facebook').Strategy;
 
     passport.serializeUser(function (user, next) {
+    	console.log('serializeUser - user: ' + JSON.stringify(user))
       next(null, user);
     });
 
     passport.deserializeUser(function (obj, next) {
+    	console.log('deserializeUser - obj: ' + JSON.stringify(obj));
       next(null, obj);
     })
 
@@ -19,10 +21,16 @@
       clientSecret: config.facebook.clientSecret,
       callbackURL: config.facebook.callbackURL
     }, function (accessToken, refreshToken, profile, next) {
-      console.log('accessToken: ' + accessToken);
-      console.log('id: ' + profile.id);
+      console.log('Strategy - accessToken: ' + accessToken);
+      console.log('Strategy - id: ' + profile.id);
+
+      var user = {
+      	id: profile.id,
+      	displayName: profile.displayName,
+      	accessToken: accessToken
+      };
       process.nextTick(function () {
-        next(null, profile);  
+        next(null, user);  
       })      
     }));
 
@@ -33,8 +41,8 @@
     app.get('/auth/facebook/callback', 
       passport.authenticate('facebook', { failureRedirect: "/#/loginfailed" }),
       function (req, res) {
-        console.log('login success, user: ' + JSON.stringify(req.user));
-
+        console.log('callback - login success, user: ' + JSON.stringify(req.user));
+        res.cookie('user', req.user, { maxAge: 60 * 60 * 24 * 7 * 2});
         res.redirect('/#');
     });
 

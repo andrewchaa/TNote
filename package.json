@@ -25,7 +25,8 @@
     "mongoose": "^3.8.19",
     "passport": "^0.2.1",
     "vash": "^0.7.12-1",
-    "passport-facebook": "^1.0.3"
+    "passport-facebook": "^1.0.3",
+    "jwt-simple": "^0.2.0"
   },
   "devDependencies": {
     "nodeunit": "^0.9.0"
