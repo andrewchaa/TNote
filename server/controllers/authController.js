@@ -1,7 +1,7 @@
 (function (controller) {
 
 	controller.init = function (app) {
-    var config = require('../../oauth.js'),
+    var config = require('../../config.js'),
         mongoose = require('mongoose'),
         passport = require('passport'),
         FacebookStrategy = require('passport-facebook').Strategy;
