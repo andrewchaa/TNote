@@ -20,19 +20,20 @@
         note.title = req.body.title;
         note.content = req.body.content;
 
-        note.save(function (err) {
-          if (err)
-            res.status(400).send(err);
+        note.add(function (error) {
+          if (error) {
+            res.status(400).send(error);
+          }
 
           var host = req.protocol + '://' + req.get('host');
           res.status(201).json({ 
             message : 'Note created',
             id : note.id,
             links : [
-              { uri : host + '/api/notes/' + note.id, rel : 'self' },
-              { uri : host + '/api/notes/' + note.id, rel : 'update' },
-              { uri : host + '/api/notes/' + note.id, rel : 'delete' },
-              { uri : host + '/api/notes/', rel : 'list' }
+              { rel : 'self',   href : host + '/api/notes/' + note.id },
+              { rel : 'update', href : host + '/api/notes/' + note.id },
+              { rel : 'delete', href : host + '/api/notes/' + note.id },
+              { rel : 'list',   href : host + '/api/notes/' }
             ]
           });
         });
@@ -40,9 +41,10 @@
       })
 
       .get(function (req, res) {
-        Note.find(function (err, notes) {
-          if (err) 
+        Note.find('', function (err, notes) {
+          if (err) {
             res.status(400).send(err);
+          }
 
           res.status(200).json(notes);
         });
@@ -50,10 +52,12 @@
 
     router.route('/notes/:note_id')
       .get(function (req, res) {
-
+        console.log('id: ' + req.params.note_id);
         Note.findById(req.params.note_id, function (err, note) {
-          if (err)
+          if (err) {
             res.status(404).send(err);
+            return;
+          }
 
           res.status(200).json({
             id: note.id,
@@ -64,27 +68,30 @@
       })
 
       .put(function (req, res) {
-        Note.findById(req.params.note_id, function (err, note) {
-          if (err)
+        Note.findById(req.params.note_id, function (err, noteEntity) {
+          if (err) {
             res.status(404).send(err);
+            return;
+          }
 
+          var note = new Note(noteEntity);
           note.title = req.body.title;
           note.content = req.body.content;
-          note.save(function (err) {
-            if (err)
-              res.status(400).send(err);
+          note.update(function (error) {
+            if (error) {
+              res.status(400);
+              return;
+            }
 
             var host = req.protocol + '://' + req.get('host');
             res.status(200).json({ 
-              note : { 
-                message : 'Note updated',
-                links : [
-                  { uri : host + '/api/notes/' + note.id, rel : 'self' },
-                  { uri : host + '/api/notes/' + note.id, rel : 'read' },
-                  { uri : host + '/api/notes/' + note.id, rel : 'delete' },
-                  { uri : host + '/api/notes/', rel : 'list' }
-                ]
-              }
+              message : 'Note updated',
+              links : [
+                { rel : 'self' ,  href : host + '/api/notes/' + note.id },
+                { rel : 'read',   href : host + '/api/notes/' + note.id },
+                { rel : 'delete', href : host + '/api/notes/' + note.id },
+                { rel : 'list',   href : host + '/api/notes/' }
+              ]
             });
 
           })

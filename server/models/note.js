@@ -1,5 +1,5 @@
-var data = { id: 1, title: 'title', content: 'content'};
 var azure = require('azure-storage');
+var uuid = require('node-uuid');
 var config = require('../../config');
 
 if (!process.env.AZURE_STORAGE_ACCOUNT) {
@@ -10,26 +10,105 @@ if (!process.env.AZURE_STORAGE_ACCESS_KEY) {
   process.env.AZURE_STORAGE_ACCESS_KEY = config.azure.AZURE_STORAGE_ACCESS_KEY;
 }
 
+var entityGen = azure.TableUtilities.entityGenerator;
+var tableService = azure.createTableService(
+    process.env.AZURE_STORAGE_ACCOUNT, 
+    process.env.AZURE_STORAGE_ACCESS_KEY
+  );
 
-function Note() {
-	this.title = '';
-	this.content = '';
+var tableName = 'notes';
+var partitionKey = 'mynotes';
+
+tableService.createTableIfNotExists(tableName, function (error) {
+  if (error) {
+    throw error;
+  }
+});
+
+function convertToNoteEntity(entry) {
+  return {
+    id: entry.RowKey._,
+    title: entry.title._,
+    content: entry.content._
+  };
+}
+
+function Note(note) {
+  if (!note) {
+    note = {
+      id: '',
+      title: '',
+      content: ''
+    };
+  }
+
+  this.id = note.id;
+	this.title = note.title._;
+	this.content = note.content._;
 }	
 
-Note.prototype.save = function (next) {
-	console.log('Saving the note, title: ' + title + ', content: ' + content);
-	next();
-};
-
-Note.find = function (next) {
-	console.log('Finding all notes');
-	next(null, [
-		data
-	]);
+Note.find = function (query, next) {
+  tableService.queryEntities(tableName, query, null, function (error, result) {
+    if (error) {
+      next(error);
+    } else {
+      next(null, result.entries.map(convertToNoteEntity));
+    }
+  });
 };
 
 Note.findById = function (id, next) {
-	next(null, data)
+  tableService.retrieveEntity(tableName, partitionKey, id, function (error, result, response) {
+    if (error) {
+      next(error);
+    }
+
+    next(null, convertToNoteEntity(result));
+  })
+  
+}
+
+Note.prototype.add = function (next) {
+  this.id = uuid();
+  var itemDescriptor = {
+    PartitionKey: entityGen.String(partitionKey),
+    RowKey: entityGen.String(this.id),
+    title: entityGen.String(this.title),
+    content: entityGen.String(this.content)
+  };
+
+  tableService.insertEntity(tableName, itemDescriptor, function (error) {
+    if (error) {
+      next(error);
+    }
+
+    console.log('itemDescriptor: ' + JSON.stringify(itemDescriptor));
+    next(null);
+  });
+};
+
+Note.prototype.update = function (next) {
+  var title = this.title;
+  var content = this.content;
+
+  // tableService.retrieveEntity(tableName, partitionKey, this.id, function (error, result, response) {
+  //   if (error) {
+  //     next(error);
+  //   }
+
+  //   console.log('title: ' + title);
+  //   console.log('content: ' + content);
+  //   result.title._ = title;
+  //   result.content._ = content;
+  //   tableService.updateEntity(tableName, result, function (error, result, response) {
+  //     if (error) {
+  //       next(error);
+  //     }
+
+  //     next(null);
+  //   });
+  // });
+  next('error');
 }
 
 module.exports = Note;
