@@ -91,24 +91,23 @@ Note.prototype.update = function (next) {
   var title = this.title;
   var content = this.content;
 
-  // tableService.retrieveEntity(tableName, partitionKey, this.id, function (error, result, response) {
-  //   if (error) {
-  //     next(error);
-  //   }
+  tableService.retrieveEntity(tableName, partitionKey, this.id, function (error, result, response) {
+    if (error) {
+      next(error);
+    }
 
-  //   console.log('title: ' + title);
-  //   console.log('content: ' + content);
-  //   result.title._ = title;
-  //   result.content._ = content;
-  //   tableService.updateEntity(tableName, result, function (error, result, response) {
-  //     if (error) {
-  //       next(error);
-  //     }
+    console.log('title: ' + title);
+    console.log('content: ' + content);
+    result.title._ = title;
+    result.content._ = content;
+    tableService.updateEntity(tableName, result, function (error, result, response) {
+      if (error) {
+        next(error);
+      }
 
-  //     next(null);
-  //   });
-  // });
-  next('error');
+      next(null);
+    });
+  });
 }
 
 module.exports = Note;

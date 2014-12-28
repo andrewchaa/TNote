@@ -86,6 +86,8 @@
             var host = req.protocol + '://' + req.get('host');
             res.status(200).json({ 
               message : 'Note updated',
+              title: note.title,
+              content: note.content,
               links : [
                 { rel : 'self' ,  href : host + '/api/notes/' + note.id },
                 { rel : 'read',   href : host + '/api/notes/' + note.id },

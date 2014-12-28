@@ -82,9 +82,9 @@ noteApp = angular.module('noteApp', ['ngRoute'])
       $scope.save = function() {
         var content = CKEDITOR.instances.content.getData();
         $http.put('/api/notes/' + $routeParams.id, { title: $scope.title, content: content })
-          .success(function (note) {
-            $scope.title = note.title;
-            CKEDITOR.instances.content.getData(note.content);
+          .success(function (noteEntity) {
+            $scope.title = noteEntity.title;
+            CKEDITOR.instances.content.getData(noteEntity.content);
           });
       }
 

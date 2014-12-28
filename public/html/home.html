@@ -13,7 +13,7 @@
 			
 			<ul class="list-group">
 			  <li class="list-group-item" ng-repeat="note in notes">
-			  	<a href="/#/{{ note._id }}">{{ note.title }}</a>
+			  	<a ng-href="/#/{{ note.id }}">{{ note.title }}</a>
 			  </li>
 			</ul>    
 
