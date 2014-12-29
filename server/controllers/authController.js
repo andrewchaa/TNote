@@ -2,17 +2,15 @@
 
 	controller.init = function (app) {
     var config = require('../../config.js'),
-        mongoose = require('mongoose'),
         passport = require('passport'),
-        FacebookStrategy = require('passport-facebook').Strategy;
+        FacebookStrategy = require('passport-facebook').Strategy
+        jwt = require('jsonwebtoken');
 
-    passport.serializeUser(function (user, next) {
-    	console.log('serializeUser - user: ' + JSON.stringify(user))
-      next(null, user);
+    passport.serializeUser(function (profile, next) {
+      next(null, profile);
     });
 
     passport.deserializeUser(function (obj, next) {
-    	console.log('deserializeUser - obj: ' + JSON.stringify(obj));
       next(null, obj);
     })
 
@@ -21,29 +19,27 @@
       clientSecret: config.facebook.clientSecret,
       callbackURL: config.facebook.callbackURL
     }, function (accessToken, refreshToken, profile, next) {
-      console.log('Strategy - accessToken: ' + accessToken);
-      console.log('Strategy - id: ' + profile.id);
 
-      var user = {
+      var profile = {
       	id: profile.id,
       	displayName: profile.displayName,
       	accessToken: accessToken
       };
+
       process.nextTick(function () {
-        next(null, user);  
+        next(null, profile);  
       })      
     }));
 
     app.use(passport.initialize());
     app.use(passport.session());
 
-    app.get('/auth/facebook', passport.authenticate('facebook'));
-    app.get('/auth/facebook/callback', 
+    app.get('/auth', passport.authenticate('facebook'));
+    app.get('/auth/callback', 
       passport.authenticate('facebook', { failureRedirect: "/#/loginfailed" }),
       function (req, res) {
-        console.log('callback - login success, user: ' + JSON.stringify(req.user));
-        res.cookie('user', req.user, { maxAge: 60 * 60 * 24 * 7 * 2});
-        res.redirect('/#');
+        res.cookie('token', jwt.sign(req.user, config.auth.secret, {expireInMinutes: 60*24*7}));
+        res.redirect('/');
     });
 
 

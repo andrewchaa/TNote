@@ -8,6 +8,11 @@ noteApp = angular.module('noteApp', ['ngRoute'])
         controller: 'homeCtrl',
         templateUrl: '../html/home.html'
       })
+      .when('/_=_', {
+        redirectTo: function () {
+          return '/';
+        }
+      })
       .when('/:id', {
         controller: 'editCtrl',
         templateUrl: '../html/home.html'

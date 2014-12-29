@@ -3,25 +3,22 @@ var app = express();
 var router = express.Router();
 
 var bodyParser = require('body-parser');
-var flash = require('connect-flash');
 var cookieParser = require('cookie-parser');
-var session = require('express-session')
+var expressJwt = require('express-jwt');
+var jwt = require('jsonwebtoken');
+var config = require('./config');
 
+var secret = process.env.secret || config.auth.secret;
 var port = process.env.PORT || 3000
 
 app.set('view engine', 'vash');
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
-app.use('/api', router);
-app.use('/', express.static('./public'));
 app.use(cookieParser('tnote'));
-app.use(session({
-  cookie: { maxAge: 60000 },
-  secret: 'tnote',
-  resave: false,
-  saveUninitialized: true
-}));
-app.use(flash());
+
+app.use('/', express.static('./public'));
+// app.use('/api', expressJwt({ secret: secret }));
+app.use('/api', router);
 
 var controllers = require('./server/controllers');
 controllers.init(app, router);
