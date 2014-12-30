@@ -8,7 +8,8 @@ var expressJwt = require('express-jwt');
 var jwt = require('jsonwebtoken');
 var port = process.env.PORT || 3000
 
-require('./setConfig')();
+require('./config')();
+
 var secret = process.env.AUTH_JWT_SECRET;
 
 app.set('view engine', 'vash');
