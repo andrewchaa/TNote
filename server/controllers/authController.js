@@ -1,10 +1,16 @@
 (function (controller) {
 
 	controller.init = function (app) {
-    var config = require('../../config.js'),
-        passport = require('passport'),
+    var passport = require('passport'),
         FacebookStrategy = require('passport-facebook').Strategy
         jwt = require('jsonwebtoken');
+
+    var config = {};
+    try {
+      config = require('../../config');
+    } catch (e) {
+      console.log("config doesn't exist. It's production.");
+    }
 
     var authClientId = process.env.AUTH_CLIENT_ID || config.env.AUTH_CLIENT_ID,
         authClientSecret = process.env.AUTH_CLIENT_SECRET || config.env.AUTH_CLIENT_SECRET,
