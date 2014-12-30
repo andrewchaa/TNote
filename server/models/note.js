@@ -1,11 +1,10 @@
-var azure = require('azure-storage'),
-    uuid = require('node-uuid'),
-    config = require('../../config');
+var azure = require('azure-storage');
+var uuid = require('node-uuid');
 
 var tableName = 'notes';
 var partitionKey = 'mynotes';
-var storageAccount = process.env.AZURE_STORAGE_ACCOUNT || config.env.AZURE_STORAGE_ACCOUNT,
-    storageAccessKey = process.env.AZURE_STORAGE_ACCESS_KEY || config.env.AZURE_STORAGE_ACCESS_KEY;
+var storageAccount = process.env.AZURE_STORAGE_ACCOUNT;
+var storageAccessKey = process.env.AZURE_STORAGE_ACCESS_KEY;
 
 var entityGen = azure.TableUtilities.entityGenerator;
 var tableService = azure.createTableService(storageAccount, storageAccessKey);

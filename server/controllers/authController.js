@@ -5,17 +5,10 @@
         FacebookStrategy = require('passport-facebook').Strategy
         jwt = require('jsonwebtoken');
 
-    var config = {};
-    try {
-      config = require('../../config');
-    } catch (e) {
-      console.log("config doesn't exist. It's production.");
-    }
-
-    var authClientId = process.env.AUTH_CLIENT_ID || config.env.AUTH_CLIENT_ID,
-        authClientSecret = process.env.AUTH_CLIENT_SECRET || config.env.AUTH_CLIENT_SECRET,
-        authCallBackUrl = process.env.AUTH_CALLBACK_URL || config.env.AUTH_CALLBACK_URL,
-        authJwtSecret = process.env.AUTH_JWT_SECRET || config.env.AUTH_JWT_SECRET;
+    var authClientId = process.env.AUTH_CLIENT_ID;
+    var authClientSecret = process.env.AUTH_CLIENT_SECRET;
+    var authCallBackUrl = process.env.AUTH_CALLBACK_URL;
+    var authJwtSecret = process.env.AUTH_JWT_SECRET;
 
     passport.serializeUser(function (profile, next) {
       next(null, profile);

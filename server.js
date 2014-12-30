@@ -8,14 +8,8 @@ var expressJwt = require('express-jwt');
 var jwt = require('jsonwebtoken');
 var port = process.env.PORT || 3000
 
-var config = {};
-try {
-  config = require('./config');
-} catch (e) {
-  console.log("config doesn't exist. It's production.");
-}
-
-var secret = process.env.AUTH_JWT_SECRET || config.env.AUTH_JWT_SECRET;
+require('./setConfig')();
+var secret = process.env.AUTH_JWT_SECRET;
 
 app.set('view engine', 'vash');
 app.use(bodyParser.urlencoded({ extended: false}));
