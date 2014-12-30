@@ -1,25 +1,25 @@
-noteApp = angular.module('noteApp', ['ngRoute'])
+noteApp = angular.module('noteApp', ['ngRoute', 'ngCookies'])
   .constant('VERSION', '0.1')
-  .config([
-    '$routeProvider',
-    function($routeProvider) {
-      $routeProvider
-      .when('/', {
-        controller: 'homeCtrl',
-        templateUrl: '../html/home.html'
-      })
-      .when('/_=_', {
-        redirectTo: function () {
-          return '/';
-        }
-      })
-      .when('/:id', {
-        controller: 'editCtrl',
-        templateUrl: '../html/home.html'
-      });
-    }
-  ])
+  .factory('authInterceptor', ['$rootScope', '$q', '$cookies', '$window', 
+    function($rootScope, $q, $cookies, $window) {
+      return {
+        request: function (req) {
+          req.headers = req.headers || {};
+          if ($cookies.token) {
+            req.headers.Authorization = 'Bearer ' + $cookies.token;  
+          }
+          
+          return req;
+        },
+        responseError: function (rejection) {
+          if (rejection.status == 401) {
+            $window.location = '/auth';      
+          }
 
+          return $q.reject(rejection);
+        }
+      }
+  }])
   .factory('listNotes', ['$http', function ($http) {
     return function (scope) {
       $http.get('/api/notes')
@@ -28,7 +28,6 @@ noteApp = angular.module('noteApp', ['ngRoute'])
       });      
     }
   }])
-
   .factory('bindEditor', [function () {
     return function (elementId) {
       CKEDITOR.disableAutoInline = true;
@@ -48,7 +47,24 @@ noteApp = angular.module('noteApp', ['ngRoute'])
 
     }
   }])
+  .config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
+    $routeProvider.when('/', {
+                    controller: 'homeCtrl',
+                    templateUrl: '../html/home.html'
+                  })
+                  .when('/_=_', {
+                    redirectTo: function () {
+                      return '/';
+                    }
+                  })
+                  .when('/:id', {
+                    controller: 'editCtrl',
+                    templateUrl: '../html/home.html'
+                  });
 
+    $httpProvider.interceptors.push('authInterceptor');  
+    }
+  ])
   .controller('homeCtrl', ['$scope', '$http', '$location', 'listNotes', 'bindEditor',
     function noteCtrl($scope, $http, $location, listNotes, bindEditor) {
 

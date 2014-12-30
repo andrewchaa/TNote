@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.use(cookieParser('tnote'));
 
 app.use('/', express.static('./public'));
-// app.use('/api', expressJwt({ secret: secret }));
+app.use('/api', expressJwt({ secret: secret }));
 app.use('/api', router);
 
 var controllers = require('./server/controllers');
