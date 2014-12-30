@@ -1,6 +1,4 @@
 TNote
 =====
 
-Markdown-based note app
-
-* use restify
+A note app born for developers and by a developer
