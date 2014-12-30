@@ -15,7 +15,7 @@ try {
   console.log("config doesn't exist. It's production.");
 }
 
-var secret = process.env.secret || config.env.AUTH_JWT_SECRET;
+var secret = process.env.AUTH_JWT_SECRET || config.env.AUTH_JWT_SECRET;
 
 app.set('view engine', 'vash');
 app.use(bodyParser.urlencoded({ extended: false}));
