@@ -1,23 +1,14 @@
-var azure = require('azure-storage');
-var uuid = require('node-uuid');
-var config = require('../../config');
-
-if (!process.env.AZURE_STORAGE_ACCOUNT) {
-  process.env.AZURE_STORAGE_ACCOUNT = config.azure.AZURE_STORAGE_ACCOUNT;
-}
-
-if (!process.env.AZURE_STORAGE_ACCESS_KEY) {
-  process.env.AZURE_STORAGE_ACCESS_KEY = config.azure.AZURE_STORAGE_ACCESS_KEY;
-}
-
-var entityGen = azure.TableUtilities.entityGenerator;
-var tableService = azure.createTableService(
-    process.env.AZURE_STORAGE_ACCOUNT, 
-    process.env.AZURE_STORAGE_ACCESS_KEY
-  );
+var azure = require('azure-storage'),
+    uuid = require('node-uuid'),
+    config = require('../../config');
 
 var tableName = 'notes';
 var partitionKey = 'mynotes';
+var storageAccount = process.env.AZURE_STORAGE_ACCOUNT || config.env.AZURE_STORAGE_ACCOUNT,
+    storageAccessKey = process.env.AZURE_STORAGE_ACCESS_KEY || config.env.AZURE_STORAGE_ACCESS_KEY;
+
+var entityGen = azure.TableUtilities.entityGenerator;
+var tableService = azure.createTableService(storageAccount, storageAccessKey);
 
 tableService.createTableIfNotExists(tableName, function (error) {
   if (error) {

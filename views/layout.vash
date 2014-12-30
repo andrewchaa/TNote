@@ -8,10 +8,9 @@
   </head>
 
   <body>
-    <div ng-view></div>
+    <div ng-view></div>    
     
     @html.include('scripts')
-
-
+  
   </body>
 </html>

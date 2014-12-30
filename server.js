@@ -8,7 +8,7 @@ var expressJwt = require('express-jwt');
 var jwt = require('jsonwebtoken');
 var config = require('./config');
 
-var secret = process.env.secret || config.auth.AUTH_JWT_SECRET;
+var secret = process.env.secret || config.env.AUTH_JWT_SECRET;
 var port = process.env.PORT || 3000
 
 app.set('view engine', 'vash');
@@ -26,4 +26,3 @@ controllers.init(app, router);
 var server = app.listen(port, function () {
 	console.log('listening on port %d', server.address().port);
 });
-
