@@ -1,11 +1,9 @@
 var config = {
-	facebook: {
-	  clientID: '522581777845402',
-    clientSecret: '6938e066780bd8abbf790f6460c17653',
-    callbackURL: 'http://localhost:3000/auth/callback'
-	},
   auth: {
-    secret: 'tnoteiscool'
+    AUTH_CLIENT_ID: '522581777845402',
+    AUTH_CLIENT_SECRET: '6938e066780bd8abbf790f6460c17653',
+    callbackURL: 'http://localhost:3000/auth/callback',
+    AUTH_JWT_SECRET: 'tnoteiscool'
   },
   azure: {
     AZURE_STORAGE_ACCOUNT: 'devnote',

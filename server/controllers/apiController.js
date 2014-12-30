@@ -3,7 +3,6 @@
   controller.init = function (router) {
     
     var Note = require('../models/note');
-    var config = require('../../config');
 
     router.use(function (req, res, next) {
       console.log('logging route...');

@@ -6,6 +6,11 @@
         FacebookStrategy = require('passport-facebook').Strategy
         jwt = require('jsonwebtoken');
 
+    var authClientId = process.env.AUTH_CLIENT_ID || config.auth.AUTH_CLIENT_ID,
+        authClientSecret = process.env.AUTH_CLIENT_SECRET || config.auth.AUTH_CLIENT_SECRET,
+        authCallBackUrl = process.env.AUTH_CALLBACK_URL || config.auth.AUTH_CALLBACK_URL,
+        authJwtSecret = process.env.AUTH_JWT_SECRET || config.auth.AUTH_JWT_SECRET;
+
     passport.serializeUser(function (profile, next) {
       next(null, profile);
     });
@@ -15,9 +20,9 @@
     })
 
     passport.use(new FacebookStrategy({
-      clientID: config.facebook.clientID,
-      clientSecret: config.facebook.clientSecret,
-      callbackURL: config.facebook.callbackURL
+      clientID: authClientId,
+      clientSecret: authClientSecret,
+      callbackURL: authCallBackUrl
     }, function (accessToken, refreshToken, profile, next) {
 
       var profile = {
@@ -38,7 +43,7 @@
     app.get('/auth/callback', 
       passport.authenticate('facebook', { failureRedirect: "/#/loginfailed" }),
       function (req, res) {
-        res.cookie('token', jwt.sign(req.user, config.auth.secret, {expireInMinutes: 60*24*7}));
+        res.cookie('token', jwt.sign(req.user, authJwtSecret, {expireInMinutes: 60*24*7}));
         res.redirect('/');
     });
 
