@@ -10,7 +10,7 @@ var port = process.env.PORT || 3000
 
 try {
   require('./config')();
-} catch {
+} catch (exception) {
   console.log("No config, it must be in production.");
 }
 
