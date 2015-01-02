@@ -8,7 +8,11 @@ var expressJwt = require('express-jwt');
 var jwt = require('jsonwebtoken');
 var port = process.env.PORT || 3000
 
-require('./config')();
+try {
+  require('./config')();
+} catch {
+  console.log("No config, it must be in production.");
+}
 
 var secret = process.env.AUTH_JWT_SECRET;
 
