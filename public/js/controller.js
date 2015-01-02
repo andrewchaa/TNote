@@ -13,7 +13,7 @@ noteApp = angular.module('noteApp', ['ngRoute', 'ngCookies'])
         },
         responseError: function (rejection) {
           if (rejection.status == 401) {
-            $window.location = '/auth';      
+            $window.location = '/#/login';      
           }
 
           return $q.reject(rejection);
@@ -49,18 +49,22 @@ noteApp = angular.module('noteApp', ['ngRoute', 'ngCookies'])
   }])
   .config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
     $routeProvider.when('/', {
-                    controller: 'homeCtrl',
-                    templateUrl: '../html/home.html'
-                  })
-                  .when('/_=_', {
-                    redirectTo: function () {
-                      return '/';
-                    }
-                  })
-                  .when('/:id', {
-                    controller: 'editCtrl',
-                    templateUrl: '../html/home.html'
-                  });
+      controller: 'homeCtrl',
+      templateUrl: '../html/home.html'
+    })
+    .when('/_=_', {
+      redirectTo: function () {
+        return '/';
+      }
+    })
+    .when('/notes/:id', {
+      controller: 'editCtrl',
+      templateUrl: '../html/home.html'
+    })
+    .when('/login', {
+      controller:   'loginCtrl',
+      templateUrl:  '../html/login.html'
+    });
 
     $httpProvider.interceptors.push('authInterceptor');  
     }
@@ -110,5 +114,8 @@ noteApp = angular.module('noteApp', ['ngRoute', 'ngCookies'])
       }
 
   }])
-;
+
+  .controller('loginCtrl', ['$scope', function ($scope) {
+
+  }]);
  
