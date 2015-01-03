@@ -21,8 +21,8 @@
 <script src="/vendor/summernote/dist/summernote.min.js"></script>
 
 <script src="/js/controller.js"></script>
+<script src="/js/directives.js"></script>
 <script src="/js/factories.js"></script>
 <script src="/js/homeController.js"></script>
 <script src="/js/editController.js"></script>
-<script src="/js/notesListDirective.js"></script>
 

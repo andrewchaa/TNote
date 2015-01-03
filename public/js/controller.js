@@ -11,7 +11,7 @@ noteApp = angular.module('noteApp', ['ngRoute', 'ngCookies'])
           return '/';
         }
       })
-      .when('/notes/:id', {
+      .when('/:id', {
         controller: 'editCtrl',
         templateUrl: '../html/home.html'
       })
