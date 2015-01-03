@@ -9,30 +9,79 @@
   </div>
   <div class="row">
 
-    <div class="col-md-4">
-			
-			<ul class="list-group">
-			  <li class="list-group-item" ng-repeat="note in notes">
-			  	<a ng-href="/#/note/{{ note.id }}">{{ note.title }}</a>
-			  </li>
-			</ul>    
-
-    </div>
     <div class="col-md-8">
 
-			<form role="form">
-				<div class="form-group">
-					<input type="text" ng-model="title" placeholder="title" class="form-control" />
-				</div>
-
-				<div class="form-group">
-				<div class="panel panel-default">
-					<div id="content" contenteditable="true" style="padding: 10px 20px;"></div>
-				</div>
-				</div>
-			</form>
 
     </div>
 
   </div>
 </div>
+
+  <!-- Content strats -->
+  <div class="content">
+     <div class="container">
+        <div class="row">
+           <div class="col-md-12">
+              
+              <!-- Blog starts -->
+
+              
+              <div class="blog">
+                 <div class="row">
+                    <div class="col-md-12">
+                       
+                       <!-- Blog Posts -->
+                       <div class="row">
+                          <div class="col-md-4 col-sm-4">
+                             <div class="sidebar">
+                                <!-- Widget -->
+                                <div class="widget">
+                                   <h4>Search</h4>
+                                   <form class="form-inline">
+                                    <div class="form-group">
+                                      <input type="text" value="" name="s" id="s" class="form-control"/>
+                                    </div>
+                                      <button type="submit" class="btn btn-default">Search</button>
+                                   </form>
+                                </div>
+                                
+                                <div notes-list></div>
+                             </div>                                                
+                          </div>
+                          
+                          <div class="col-md-8 col-sm-8">
+                             <div class="posts">
+                             
+                                <!-- Each posts should be enclosed inside "entry" class" -->
+                                <!-- Post one -->
+                                <div class="entry">
+                                   <h2><a ng-bind="title" href="#"></a></h2>
+                                   
+                                   <!-- Meta details -->
+                                   <div class="meta">
+                                      <i class="fa fa-calendar"></i> 26-2-2012 <i class="fa fa-user"></i> Admin <i class="fa fa-folder-open"></i> <a href="#">General</a> <span class="pull-right"><i class="fa fa-comment"></i> <a href="#">2 Comments</a></span>
+                                   </div>
+                                   
+                                   <div id="summernote"></div>
+                                </div>
+                                
+                                <div class="clearfix"></div>
+                                
+                             </div>
+                          </div>                        
+                       </div>
+                       
+                       
+                       
+                    </div>
+                 </div>
+              </div>
+              
+              
+              <!-- Service ends -->
+              
+           </div>
+        </div>
+     </div>
+  </div>   
+  <!-- Content ends --> 

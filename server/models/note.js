@@ -8,6 +8,7 @@ var storageAccessKey = process.env.AZURE_STORAGE_ACCESS_KEY;
 
 var entityGen = azure.TableUtilities.entityGenerator;
 var tableService = azure.createTableService(storageAccount, storageAccessKey);
+var TableQuery = azure.TableQuery;
 
 tableService.createTableIfNotExists(tableName, function (error) {
   if (error) {
@@ -18,6 +19,7 @@ tableService.createTableIfNotExists(tableName, function (error) {
 function convertToNoteEntity(entry) {
   return {
     id: entry.RowKey._,
+    userId: entry.userId._,
     title: entry.title._,
     content: entry.content._
   };
@@ -27,17 +29,20 @@ function Note(note) {
   if (!note) {
     note = {
       id: '',
+      userId: 0,
       title: '',
       content: ''
     };
   }
 
   this.id = note.id;
+  this.userId = note.userId;
 	this.title = note.title._;
 	this.content = note.content._;
 }	
 
-Note.find = function (query, next) {
+Note.find = function (userId, next) {
+  var query = new TableQuery().top(30).where(TableQuery.int64Filter('userId', 'eq', userId));
   tableService.queryEntities(tableName, query, null, function (error, result) {
     if (error) {
       next(error);
@@ -63,6 +68,8 @@ Note.prototype.add = function (next) {
   var itemDescriptor = {
     PartitionKey: entityGen.String(partitionKey),
     RowKey: entityGen.String(this.id),
+    id: entityGen.String(this.id),
+    userId: entityGen.Int64(this.userId),
     title: entityGen.String(this.title),
     content: entityGen.String(this.content)
   };
@@ -72,7 +79,6 @@ Note.prototype.add = function (next) {
       next(error);
     }
 
-    console.log('itemDescriptor: ' + JSON.stringify(itemDescriptor));
     next(null);
   });
 };
@@ -86,8 +92,6 @@ Note.prototype.update = function (next) {
       next(error);
     }
 
-    console.log('title: ' + title);
-    console.log('content: ' + content);
     result.title._ = title;
     result.content._ = content;
     tableService.updateEntity(tableName, result, function (error, result, response) {

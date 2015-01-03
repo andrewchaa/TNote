@@ -9,16 +9,13 @@
       next();
     });
 
-    router.get('/', function (req, res) {
-      res.redirect('/index.html');
-    });
-
     router.route('/notes')
       .post(function (req, res) {
 
         var note = new Note();
         note.title = req.body.title;
         note.content = req.body.content;
+        note.userId = req.user.id;
 
         note.add(function (error) {
           if (error) {
@@ -41,7 +38,8 @@
       })
 
       .get(function (req, res) {
-        Note.find('', function (err, notes) {
+        Note.find(req.user.id, function (err, notes) {
+          console.log('userId: ' + req.user.id);
           if (err) {
             res.status(400).send(err);
           }
@@ -77,6 +75,8 @@
           var note = new Note(noteEntity);
           note.title = req.body.title;
           note.content = req.body.content;
+          note.userId = req.user.id;
+
           note.update(function (error) {
             if (error) {
               res.status(400);

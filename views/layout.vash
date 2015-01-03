@@ -1,16 +1,74 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" ng-app="noteApp" style="overflow: -moz-scrollbars-vertical; overflow-y: scroll;">
-  <head>
-    <meta charset="UTF-8">
-    <title>Tech note</title>
-    <link rel="stylesheet" href="/css/font-awesome.css" />
-    <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.min.css" />
-  </head>
-
-  <body>
-    <div ng-view></div>    
-    
-    @html.include('scripts')
+<head>
+  <meta charset="utf-8">
+  <title>TNote</title>
+  <meta name="description" content="a note app for developers">
+  <meta name="keywords" content="Technical Note, Note">
+  <meta name="author" content="Andrew Chaa">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  </body>
+  <link rel="stylesheet" href="/vendor/ericka/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/vendor/ericka/css/flexslider.css" >
+  <link rel="stylesheet" href="/vendor/ericka/css/prettyPhoto.css">
+  <link rel="stylesheet" href="/vendor/ericka/css/style.css">
+  <link rel="stylesheet" href="/vendor/ericka/css/blue.css"> 
+  <link rel="stylesheet" href="/vendor/summernote/dist/summernote.css"> 
+
+  <link rel="shortcut icon" href="/vendor/ericka/img/favicon/favicon.png">
+
+</head>
+  
+<body>
+
+  <!-- Navigation Starts -->
+  <div class="navbar bs-docs-nav" role="banner">
+    <div class="container">
+      <div class="navbar-header">
+        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+      <!-- Navigation links starts here -->
+        <ul class="nav navbar-nav">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Home <b class="caret"></b></a>
+            <!-- Submenus -->
+            <ul class="dropdown-menu">
+              <li><a href="/#">Home</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <!--/ Navigation Ends -->   
+
+  <div ng-view></div>    
+
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+     <div class="row">
+      <div class="col-md-12"><p class="copy pull-left">
+        Copyright &copy; <a href="/#">TNote, a note app for developers</a> 
+      </div>
+    </div>
+    </div>
+  </footer>   
+  <!--/ Footer -->
+    
+  <!-- Scroll to top -->
+  <span class="totop"><a href="#"><i class="fa fa-angle-up"></i></a></span> 
+
+  @html.include('scripts')
+    
+</body> 
+
 </html>
