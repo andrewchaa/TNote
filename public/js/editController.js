@@ -1,13 +1,15 @@
 angular.module('noteApp')
   .controller('editCtrl', ['$scope', '$routeParams', '$http', '$location', 'listNotes', 'bindEditor',
     function ($scope, $routeParams, $http, $location, listNotes, bindEditor) {
-      bindEditor();
+
       listNotes($scope);
 
       $http.get('/api/notes/' + $routeParams.id)
         .success(function (note, status, headers, config) {
           $scope.title = note.title;
           $scope.content = note.content;
+
+          bindEditor();
           $('#summernote').code(note.content);
 
       });
