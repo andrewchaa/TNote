@@ -17,9 +17,21 @@ angular.module('noteApp')
       templateUrl: '../html/directives/navigation.html'
     }
   })
-  .directive('noteEntry', function () {
+  .directive('noteEdit', function () {
     return {
-      templateUrl: '../html/directives/entry.html'
+      link: function () {
+        $('#summernote').summernote({
+          height: 250,
+          minHeight: 250,
+          focus: true
+        });
+      },
+      templateUrl: '../html/directives/edit.html'
+    }
+  })
+  .directive('noteView', function () {
+    return {
+      templateUrl: '../html/directives/view.html'
     }
   })
 ;

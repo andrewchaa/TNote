@@ -3,16 +3,18 @@ angular.module('noteApp')
     function noteCtrl($scope, $http, $location, listNotes, bindEditor) {
 
       listNotes($scope);
-      bindEditor('content');
 
       $scope.save = function() {
         var title = $scope.title;
-        // var content = CKEDITOR.instances.content.getData();
+        var content = $('#summernote').code();
+
+        console.log('content: ' + content);        
 
         $http.post('/api/notes', { title: title, content: content })
           .success(function (note, status, headers, config) {
             $location.path('/notes/' + note.id);
-          });
+        });
       }
+
   }])
 ;

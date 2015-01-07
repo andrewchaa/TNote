@@ -20,7 +20,7 @@ angular.module('noteApp')
       }
   }])
   .factory('bindEditor', [function () {
-    return function (elementId) {
+    return function () {
       $('#summernote').summernote({
         height: 300,
         minHeight: 300,
