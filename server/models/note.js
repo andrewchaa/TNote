@@ -86,12 +86,14 @@ Note.prototype.add = function (next) {
 Note.prototype.update = function (next) {
   var title = this.title;
   var content = this.content;
+  var id = this.id;
 
   tableService.retrieveEntity(tableName, partitionKey, this.id, function (error, result, response) {
     if (error) {
       next(error);
     }
 
+    result.id._ = id;
     result.title._ = title;
     result.content._ = content;
     tableService.updateEntity(tableName, result, function (error, result, response) {

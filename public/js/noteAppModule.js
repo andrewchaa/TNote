@@ -3,27 +3,23 @@ noteApp = angular.module('noteApp', ['ngRoute', 'ngCookies'])
   .config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
     $routeProvider
       .when('/', {
-      controller: 'homeCtrl',
-      templateUrl: '../html/home.html'
+        controller: 'homeCtrl',
+        templateUrl: '../html/home.html'
       })
       .when('/_=_', {
         redirectTo: function () {
           return '/';
         }
       })
-      .when('/:id', {
-        controller: 'editCtrl',
-        templateUrl: '../html/home.html'
-      })
       .when('/login', {
         controller:   'loginCtrl',
         templateUrl:  '../html/login.html'
+      })
+      .when('/:id', {
+        controller: 'editCtrl',
+        templateUrl: '../html/home.html'
       });
 
     $httpProvider.interceptors.push('authInterceptor');  
-  }])
-
-  .controller('loginCtrl', ['$scope', function ($scope) {
-
   }]);
  

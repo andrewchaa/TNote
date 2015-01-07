@@ -5,7 +5,7 @@
     var Note = require('../models/note');
 
     router.use(function (req, res, next) {
-      console.log('logging route...');
+      console.log('logging route: ' + req.originalUrl);
       next();
     });
 
