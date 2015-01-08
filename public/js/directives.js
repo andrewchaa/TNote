@@ -21,7 +21,7 @@ angular.module('noteApp')
     return {
       link: function () {
         $('#content').summernote({
-          height: 250,
+          height: 100,
           minHeight: 250,
           focus: true
         });
