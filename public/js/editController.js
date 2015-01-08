@@ -11,6 +11,7 @@ angular.module('noteApp')
 
           bindEditor();
           $('#content').code(note.content);
+          $('#content').destroy();
 
       });
 

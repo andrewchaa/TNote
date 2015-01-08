@@ -20,12 +20,13 @@ angular.module('noteApp')
   .directive('noteContent', function () {
     return {
       link: function () {
+        var height = $(window).height() - 450;
         $('#content').summernote({
-          height: 100,
-          minHeight: 250,
-          focus: true
+          height: height,
+          minHeight: 250
         });
       },
+
       templateUrl: '../html/directives/content.html'
     }
   })
