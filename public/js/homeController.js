@@ -12,7 +12,7 @@ angular.module('noteApp')
 
         $http.post('/api/notes', { title: title, content: content })
           .success(function (note, status, headers, config) {
-            $location.path('/notes/' + note.id);
+            $location.path('/' + note.id);
         });
       }
 

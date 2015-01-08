@@ -10,7 +10,7 @@ angular.module('noteApp')
           $scope.content = note.content;
 
           bindEditor();
-          $('#summernote').code(note.content);
+          $('#content').code(note.content);
 
       });
 
@@ -19,7 +19,7 @@ angular.module('noteApp')
       }
 
       $scope.save = function() {
-        var content = $('#summernote').code();
+        var content = $('#content').code();
         $http.put('/api/notes/' + $routeParams.id, { title: $scope.title, content: content })
           .success(function (noteEntity) {
             $scope.title = noteEntity.title;

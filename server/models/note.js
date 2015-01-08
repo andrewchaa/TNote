@@ -17,12 +17,15 @@ tableService.createTableIfNotExists(tableName, function (error) {
 });
 
 function convertToNoteEntity(entry) {
-  return {
-    id: entry.RowKey._,
-    userId: entry.userId._,
-    title: entry.title._,
-    content: entry.content._
-  };
+  var note = {};
+  note.id = entry.RowKey._;
+  note.userId = entry.userId._;
+  note.title = entry.title._;
+  if (entry.content) {
+    note.content = entry.content._;
+  }
+
+  return note;
 }
 
 function Note(note) {
@@ -38,7 +41,10 @@ function Note(note) {
   this.id = note.id;
   this.userId = note.userId;
 	this.title = note.title._;
-	this.content = note.content._;
+  if (note.content) {
+    this.content = note.content._;  
+  }
+	
 }	
 
 Note.find = function (userId, next) {
@@ -95,7 +101,10 @@ Note.prototype.update = function (next) {
 
     result.id._ = id;
     result.title._ = title;
-    result.content._ = content;
+    result.content = {
+      "_" : content
+    };
+    
     tableService.updateEntity(tableName, result, function (error, result, response) {
       if (error) {
         next(error);
