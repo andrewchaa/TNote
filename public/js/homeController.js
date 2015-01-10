@@ -4,6 +4,8 @@ angular.module('noteApp')
 
       listNotes($scope);
 
+      $scope.isEdit = true;
+      $scope.editText = "New";
       $scope.save = function() {
         var title = $scope.title;
         var content = $('#summernote').code();

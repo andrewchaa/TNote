@@ -1,25 +1,32 @@
 <div class="posts">
 
-  <div class="respond well">
-    <div class="form">
-      <form class="form-horizontal">
-         <div class="form-group">
-           <div class="col-md-12">
-             <h3 ng-bind="title"></h3>
-             <input type="text" ng-model="title" ng-show="isEdit" class="form-control ng-hide" id="title">
-           </div>
-         </div>
-         <div class="form-group">
-           <div class="col-md-12">
-             <div id="content"></div>
-           </div>
-         </div>
-         <div class="form-group">
-         <div class="col-md-9">
-           <button type="submit" ng-click="save()" ng-show="isEdit" class="btn btn-default ng-hide">Save</button>
-        </div>
-         </div>
-     </form>
+  <div class="row">
+    <div class="respond well">
+      <div class="form">
+        <form class="form-horizontal">
+          <div class="form-group">
+              <div class="col-md-12">
+                <button class="btn btn-info" ng-click="edit()" ng-bind="editText"></button>
+              </div>
+          </div>
+          <div class="form-group">
+              <div class="col-md-12">
+                <h3 ng-show="isEdit" ng-bind="title" class="ng-hide"></h3>
+                <input type="text" ng-model="title" ng-show="isEdit" class="form-control" id="title">
+              </div>
+          </div>
+            <div class="form-group">
+              <div class="col-md-12">
+                <div id="content"></div>
+              </div>
+            </div>
+            <div class="form-group">
+            <div class="col-md-9">
+              <button type="submit" ng-click="save()" ng-show="isEdit" class="btn btn-default">Save</button>
+            </div>
+          </div>
+       </form>
+      </div>
     </div>
   </div>
 

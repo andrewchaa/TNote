@@ -8,12 +8,22 @@ angular.module('noteApp')
         .success(function (note, status, headers, config) {
           $scope.title = note.title;
           $scope.content = note.content;
+          $scope.editText = "Edit";
 
           bindEditor();
           $('#content').code(note.content);
           $('#content').destroy();
 
       });
+
+      $scope.edit = function () {
+        $scope.isEdit = !$scope.isEdit;
+        if ($scope.isEdit) {
+          $scope.editText = "View";
+        } else {
+          $scope.editText = "Edit";
+        }
+      }
 
       $scope.new = function() {
         $location.path('/');
