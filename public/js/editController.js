@@ -27,11 +27,15 @@ angular.module('noteApp')
       }
 
       $scope.save = function() {
+        $scope.isSaving = true;
+
         var content = $('#content').code();
         $http.put('/api/notes/' + $routeParams.id, { title: $scope.title, content: content })
           .success(function (noteEntity) {
             $scope.title = noteEntity.title;
-          });
+            $scope.isSaving = false;
+          }
+        );
       }
 
   }])
