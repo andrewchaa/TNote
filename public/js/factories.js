@@ -19,14 +19,19 @@ angular.module('noteApp')
         }
       }
   }])
-  .factory('bindEditor', [function () {
-    return function () {
-      $('#summernote').summernote({
-        height: 300,
-        minHeight: 300,
-        focus: true
-      });
-
+  .factory('noteEditor', [function () {
+    return  {
+      show: function () {
+        var height = $(window).height() - 450;
+        $('#content').summernote({
+          height: height,
+          minHeight: 250,
+          focus: true
+        });
+      },
+      hide: function() {
+        $('#content').destroy();
+      }
     }
   }])
 ;

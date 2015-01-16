@@ -6,18 +6,19 @@
         <form class="form-horizontal">
           <div class="form-group">
               <div class="col-md-12">
-                <button class="btn btn-info" ng-click="edit()" ng-bind="editText"></button>
+                <button class="btn btn-info" ng-click="view()" ng-show="isEdit">View</button>
+                <button class="btn btn-info" ng-click="edit()" ng-show="isView">Edit</button>
               </div>
           </div>
           <div class="form-group">
               <div class="col-md-12">
-                <h3 ng-show="isEdit" ng-bind="title" class="ng-hide"></h3>
+                <h3 ng-bind="title" ng-show="isView" ></h3>
                 <input type="text" ng-model="title" ng-show="isEdit" class="form-control" id="title">
               </div>
           </div>
             <div class="form-group">
               <div class="col-md-12">
-                <div id="content"></div>
+                <div id="content" ng-bind-html="content"></div>
               </div>
             </div>
             <div class="form-group">

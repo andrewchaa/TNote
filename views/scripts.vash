@@ -1,22 +1,19 @@
 <script src="/vendor/angular/angular.js"></script>
 <script src="/vendor/angular-route/angular-route.js"></script>
 <script src="/vendor/angular-cookies/angular-cookies.js"></script>
+<script src="/vendor/angular-sanitize/angular-sanitize.min.js"></script>
 
 <!-- Isotope, Pretty Photo JS -->
 <script src="/vendor/jquery/dist/jquery.min.js"></script>
 <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="/vendor/ericka/js/jquery.isotope.js"></script>
 <script src="/vendor/ericka/js/jquery.prettyPhoto.js"></script>
-<!-- Support Page Filter JS -->
-<script src="/vendor/ericka/js/filter.js"></script>
-<!-- Flex slider JS -->
-<script src="/vendor/ericka/js/jquery.flexslider-min.js"></script>
-<!-- Respond JS for IE8 -->
-<script src="/vendor/ericka/js/respond.min.js"></script>
-<!-- HTML5 Support for IE -->
-<script src="/vendor/ericka/js/html5shiv.js"></script>
-<!-- Custom JS -->
-<script src="/vendor/ericka/js/custom.js"></script>
+
+<script src="/vendor/ericka/js/filter.js"></script> 				<!-- Support Page Filter JS -->
+<script src="/vendor/ericka/js/jquery.flexslider-min.js"></script> 	<!-- Flex slider JS -->
+<script src="/vendor/ericka/js/respond.min.js"></script> 			<!-- Respond JS for IE8 -->
+<script src="/vendor/ericka/js/html5shiv.js"></script> 				<!-- HTML5 Support for IE -->
+<script src="/vendor/ericka/js/custom.js"></script> 				<!-- Custom JS -->
 
 <script src="/vendor/summernote/dist/summernote.min.js"></script>
 
