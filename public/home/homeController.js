@@ -1,13 +1,11 @@
-angular.module('noteApp')
-  .controller('homeCtrl', ['$scope', '$http', '$location', 'listNotes', 'noteEditor',
+angular.module('noteApp').controller('homeCtrl', ['$scope', '$http', '$location', 'listNotes', 'noteEditor',
     function homeCtrl($scope, $http, $location, listNotes, noteEditor) {
 
       listNotes($scope);
 
-      $scope.isEdit = true;
-      $scope.isView = false;
-
       $scope.save = function() {
+        $scope.isSaving = true;
+
         var title = $scope.title;
         var content = $('#content').code();
 
@@ -15,6 +13,8 @@ angular.module('noteApp')
           .success(function (note, status, headers, config) {
             $location.path('/' + note.id);
         });
+
+        $scope.isSaving = false;
       }
   }])
 ;

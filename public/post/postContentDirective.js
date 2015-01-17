@@ -1,4 +1,4 @@
-angular.module('noteApp').directive('noteContent', function () {
+angular.module('noteApp').directive('postContent', function () {
   return {
     // link: function (scope, element, attr) {
     //   var height = $(window).height() - 450;
@@ -8,6 +8,6 @@ angular.module('noteApp').directive('noteContent', function () {
     //   });
     // },
 
-    templateUrl: '../html/directives/content.html'
+    templateUrl: '/post/postContent.html'
   }
 });

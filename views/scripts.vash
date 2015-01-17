@@ -17,11 +17,14 @@
 
 <script src="/vendor/summernote/dist/summernote.min.js"></script>
 
-<script src="/js/noteAppModule.js"></script>
+<script src="/home/noteAppModule.js"></script>
+<script src="/home/homeController.js"></script>
+<script src="/home/homeContentDirective.js"></script>
+<script src="/home/homeSideBarDirective.js"></script>
+<script src="/post/postEditorFactory.js"></script>
+<script src="/post/postContentDirective.js"></script>
+<script src="/post/postController.js"></script>
 <script src="/js/directives.js"></script>
 <script src="/js/factories.js"></script>
-<script src="/js/homeController.js"></script>
-<script src="/post/postEditorFactory.js"></script>
-<script src="/post/postController.js"></script>
 <script src="/js/loginController.js"></script>
 

@@ -4,7 +4,7 @@ noteApp = angular.module('noteApp', ['ngRoute', 'ngCookies', 'ngSanitize'])
     $routeProvider
       .when('/', {
         controller: 'homeCtrl',
-        templateUrl: '../html/home.html'
+        templateUrl: './home/home.html'
       })
       .when('/_=_', {
         redirectTo: function () {
