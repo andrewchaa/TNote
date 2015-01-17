@@ -1,10 +1,9 @@
 angular.module('noteApp')
-  .controller('editCtrl', ['$scope', '$routeParams', '$http', '$location', 'listNotes', 'noteEditor', 
+  .controller('postCtrl', ['$scope', '$routeParams', '$http', '$location', 'listNotes', 'noteEditor', 
     function ($scope, $routeParams, $http, $location, listNotes, noteEditor) {
 
       listNotes($scope);
       $scope.isView = true;
-      $scope.buttonText = 'View';
 
       $http.get('/api/notes/' + $routeParams.id)
         .success(function (note, status, headers, config) {

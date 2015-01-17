@@ -16,8 +16,8 @@ noteApp = angular.module('noteApp', ['ngRoute', 'ngCookies', 'ngSanitize'])
         templateUrl:  '../html/login.html'
       })
       .when('/:id', {
-        controller: 'editCtrl',
-        templateUrl: '../html/home.html'
+        controller: 'postCtrl',
+        templateUrl: '../post/post.html'
       });
 
     $httpProvider.interceptors.push('authInterceptor');  

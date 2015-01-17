@@ -1,22 +1,20 @@
 angular.module('noteApp')
-  .controller('homeCtrl', ['$scope', '$http', '$location', 'listNotes', 'bindEditor',
-    function noteCtrl($scope, $http, $location, listNotes, bindEditor) {
+  .controller('homeCtrl', ['$scope', '$http', '$location', 'listNotes', 'noteEditor',
+    function homeCtrl($scope, $http, $location, listNotes, noteEditor) {
 
       listNotes($scope);
 
       $scope.isEdit = true;
-      $scope.editText = "New";
+      $scope.isView = false;
+
       $scope.save = function() {
         var title = $scope.title;
-        var content = $('#summernote').code();
-
-        console.log('content: ' + content);        
+        var content = $('#content').code();
 
         $http.post('/api/notes', { title: title, content: content })
           .success(function (note, status, headers, config) {
             $location.path('/' + note.id);
         });
       }
-
   }])
 ;

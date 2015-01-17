@@ -1,0 +1,37 @@
+<div class="posts">
+
+  <div class="row">
+    <div class="respond well">
+      <div class="form">
+        <form class="form-horizontal">
+          <div class="form-group">
+              <div class="col-md-12">
+                <button class="btn btn-info" ng-click="view()" ng-show="isEdit">View</button>
+                <button class="btn btn-info" ng-click="edit()" ng-show="isView">Edit</button>
+              </div>
+          </div>
+          <div class="form-group">
+              <div class="col-md-12">
+                <h3 ng-bind="title" ng-show="isView" ></h3>
+                <input type="text" ng-model="title" ng-show="isEdit" class="form-control" id="title">
+              </div>
+          </div>
+            <div class="form-group">
+              <div class="col-md-12">
+                <div id="content" ng-bind-html="content"></div>
+              </div>
+            </div>
+            <div class="form-group">
+            <div class="col-md-9">
+              <button type="submit" ng-click="save()" ng-show="isEdit" class="btn btn-default">
+                <i class="fa fa-circle-o-notch fa-spin ng-hide" ng-show="isSaving"></i>
+                <i class="fa fa-save" ng-hide="isSaving"></i>
+              </button>
+            </div>
+          </div>
+       </form>
+      </div>
+    </div>
+  </div>
+
+</div>

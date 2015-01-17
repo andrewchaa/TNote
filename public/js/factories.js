@@ -19,19 +19,4 @@ angular.module('noteApp')
         }
       }
   }])
-  .factory('noteEditor', [function () {
-    return  {
-      show: function () {
-        var height = $(window).height() - 450;
-        $('#content').summernote({
-          height: height,
-          minHeight: 250,
-          focus: true
-        });
-      },
-      hide: function() {
-        $('#content').destroy();
-      }
-    }
-  }])
 ;

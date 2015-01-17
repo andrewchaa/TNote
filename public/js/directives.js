@@ -19,7 +19,7 @@ angular.module('noteApp')
   })
   .directive('noteContent', function () {
     return {
-      // link: function () {
+      // link: function (scope, element, attr) {
       //   var height = $(window).height() - 450;
       //   $('#content').summernote({
       //     height: height,
