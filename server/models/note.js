@@ -36,6 +36,8 @@ function Note(note) {
       title: '',
       content: ''
     };
+
+    return;
   }
 
   this.id = note.id;
