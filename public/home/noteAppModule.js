@@ -1,6 +1,8 @@
 noteApp = angular.module('noteApp', ['ngRoute', 'ngCookies', 'ngSanitize'])
   .constant('VERSION', '0.1')
   .config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
+    console.log($routeProvider);
+
     $routeProvider
       .when('/', {
         controller: 'homeCtrl',
